@@ -1,13 +1,19 @@
 DEBUG = FALSE
 
-GCC = nspire-gcc
-AS  = nspire-as
-GXX = nspire-g++
-LD  = nspire-ld
-GENZEHN = genzehn
+GCC      = nspire-gcc
+AS       = nspire-as
+GXX      = nspire-g++
+LD       = nspire-ld
+GENZEHN  = genzehn
 
-GCCFLAGS = -Wall -W -marm
-LDFLAGS =
+SRC_DIR  = src
+INC_DIR  = include
+BUILDDIR = build
+DISTDIR  = bin
+EXE      = sokoban
+
+GCCFLAGS = -Wall -W -marm -I$(INC_DIR)
+LDFLAGS  =
 ZEHNFLAGS = --name "sokoban"
 
 ifeq ($(DEBUG),FALSE)
@@ -16,33 +22,37 @@ else
 	GCCFLAGS += -O0 -g
 endif
 
-EXE = sokoban
-BUILDDIR = build
-DISTDIR = bin
+C_SRCS   = $(shell find $(SRC_DIR) -name '*.c')
+CPP_SRCS = $(shell find $(SRC_DIR) -name '*.cpp')
+ASM_SRCS = $(shell find $(SRC_DIR) -name '*.S')
 
-# Object files now go in $(BUILDDIR)
-OBJS = $(patsubst %.c, $(BUILDDIR)/%.o, $(shell find . -name \*.c))
-OBJS += $(patsubst %.cpp, $(BUILDDIR)/%.o, $(shell find . -name \*.cpp))
-OBJS += $(patsubst %.S, $(BUILDDIR)/%.o, $(shell find . -name \*.S))
+OBJS  = $(patsubst $(SRC_DIR)/%.c,$(BUILDDIR)/%.o,$(C_SRCS))
+OBJS += $(patsubst $(SRC_DIR)/%.cpp,$(BUILDDIR)/%.o,$(CPP_SRCS))
+OBJS += $(patsubst $(SRC_DIR)/%.S,$(BUILDDIR)/%.o,$(ASM_SRCS))
 
 all: $(DISTDIR)/$(EXE).tns
 
-$(BUILDDIR)/%.o: %.c
+# Objects
+$(BUILDDIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	$(GCC) $(GCCFLAGS) -c $< -o $@
 
-$(BUILDDIR)/%.o: %.cpp
+$(BUILDDIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(dir $@)
 	$(GXX) $(GCCFLAGS) -c $< -o $@
 	
-$(BUILDDIR)/%.o: %.S
+$(BUILDDIR)/%.o: $(SRC_DIR)/%.S
 	@mkdir -p $(dir $@)
 	$(AS) -c $< -o $@
 
+
+# Linking
 $(BUILDDIR)/$(EXE).elf: $(OBJS)
 	@mkdir -p $(BUILDDIR)
 	$(LD) $^ -o $@ $(LDFLAGS)
 
+
+# Packaging
 $(DISTDIR)/$(EXE).tns: $(BUILDDIR)/$(EXE).elf
 	@mkdir -p $(DISTDIR)
 	$(GENZEHN) --input $< --output $(BUILDDIR)/$(EXE).zehn $(ZEHNFLAGS)

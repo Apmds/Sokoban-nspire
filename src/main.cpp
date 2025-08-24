@@ -1,5 +1,5 @@
 #include <os.h>
-#include "data.hpp"
+#include "image_data.hpp"
 #include <SDL/SDL_config.h>
 #include <SDL/SDL.h>
 #include <math.h>
@@ -58,6 +58,10 @@ int main() {
 	if (sprite == NULL) {
 		return EXIT_FAILURE;
 	}
+	// The black pixel is the transparent (change later)
+	SDL_SetColorKey(sprite,
+		SDL_SRCCOLORKEY | SDL_RLEACCEL,
+		SDL_MapRGB(sprite->format, 0, 0, 0));
 	
 	// Deltatime / framerate vars
 	Uint32 last_time = SDL_GetTicks();
@@ -68,18 +72,6 @@ int main() {
 		// Update
 		int framerate = int(1.0f/(float(delta_time)*0.001));
 
-		// Draw
-
-		// Clear screen
-		SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 184, 200, 222));
-		
-		nSDL_DrawString(screen, font, 10, 10, "FPS: %d \x1", framerate);
-		nSDL_DrawString(screen, font, 10, 20, "Press esc to exit... \x1");
-		
-		draw_image(sprite, 30, 30);
-		
-		SDL_Flip(screen);
-		
 		// Event handling
 		// This equates to one input per frame
 		SDL_Event event;
@@ -96,6 +88,20 @@ int main() {
 				break;
 			}
 		}
+
+		
+		// Draw
+
+		// Clear screen
+		SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 184, 200, 222));
+		
+		nSDL_DrawString(screen, font, 10, 10, "FPS: %d \x1", framerate);
+		nSDL_DrawString(screen, font, 10, 20, "Press esc to exit... \x1");
+		
+		draw_image(sprite, 30, 30);
+		
+		SDL_Flip(screen);
+		
 
 		// Deltatime handling
 		current_time = SDL_GetTicks();

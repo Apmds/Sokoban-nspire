@@ -1,5 +1,5 @@
-#ifndef DATA_H
-#define DATA
+#ifndef IMAGE_DATA_H
+#define IMAGE_DATA
 
 
 
