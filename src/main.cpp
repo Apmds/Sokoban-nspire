@@ -1,5 +1,7 @@
 #include <os.h>
 #include "image_data.hpp"
+#include "level.hpp"
+#include "level_data.hpp"
 #include <SDL/SDL_config.h>
 #include <SDL/SDL.h>
 #include <math.h>
@@ -24,20 +26,6 @@ void init() {
 	SDL_ShowCursor(SDL_DISABLE);
 }
 
-void draw_image(SDL_Surface* img, int x, int y) {
-	SDL_Rect src;
-	src.x = 0;
-	src.y = 0;
-	src.w = WABBIT_WIDTH;
-	src.h = WABBIT_HEIGHT;
-
-	SDL_Rect pos;
-	pos.x = x;
-	pos.y = y;
-
-	SDL_BlitSurface(img, &src, screen, &pos);
-}
-
 // Quits the program, unloading what's needed
 void quit(nSDL_Font* font) {
 	nSDL_FreeFont(font);
@@ -54,15 +42,18 @@ int main() {
 
 	SDL_bool should_close = SDL_FALSE;
 
-	SDL_Surface* sprite = nSDL_LoadImage(wabbit_alpha);
-	if (sprite == NULL) {
+	SDL_Surface* ground_sprite = nSDL_LoadImage(image_ground);
+	if (ground_sprite == NULL) {
 		return EXIT_FAILURE;
 	}
-	// The black pixel is the transparent (change later)
-	SDL_SetColorKey(sprite,
-		SDL_SRCCOLORKEY | SDL_RLEACCEL,
-		SDL_MapRGB(sprite->format, 0, 0, 0));
-	
+	SDL_Surface* wall_sprite = nSDL_LoadImage(image_wall);
+	if (wall_sprite == NULL) {
+		return EXIT_FAILURE;
+	}
+
+	Level currLevel(level1size.x, level1size.y, level1map, level1playerPos, level1boxes, level1storages, ground_sprite, wall_sprite);
+
+
 	// Deltatime / framerate vars
 	Uint32 last_time = SDL_GetTicks();
 	Uint32 current_time = SDL_GetTicks();
@@ -95,10 +86,12 @@ int main() {
 		// Clear screen
 		SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 184, 200, 222));
 		
+		currLevel.draw(screen);
+
+		// UI
 		nSDL_DrawString(screen, font, 10, 10, "FPS: %d \x1", framerate);
 		nSDL_DrawString(screen, font, 10, 20, "Press esc to exit... \x1");
 		
-		draw_image(sprite, 30, 30);
 		
 		SDL_Flip(screen);
 		

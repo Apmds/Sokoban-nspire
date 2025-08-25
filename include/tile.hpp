@@ -20,6 +20,7 @@ typedef struct vec2 {
     int y;
 } vec2;
 
+// Base class
 class Tile {
 private:
     vec2 gridPos;
@@ -31,5 +32,6 @@ public:
     void draw(SDL_Surface* screen);
 };
 
+// Add movable tiles here
 
 #endif

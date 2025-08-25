@@ -4,6 +4,7 @@
 #include "level.hpp"
 #include "tile.hpp"
 
+static vec2 level1size = {8, 9};
 static TileType level1map[] = {
     GROUND, GROUND, WALL  , WALL  , WALL  , WALL  , WALL  , GROUND,
     WALL  , WALL  , WALL  , GROUND, GROUND, GROUND, WALL  , GROUND,
@@ -32,7 +33,7 @@ static std::vector<vec2> level1storages = {
     {4, 7},
     {6, 5},
 };
-Level level1(8, 9, level1map, (vec2) {2, 2}, level1boxes, level1storages);
+static vec2 level1playerPos = {2, 2};
 
 
 #endif

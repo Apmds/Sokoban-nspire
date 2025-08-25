@@ -5,8 +5,7 @@ Tile::Tile(vec2 gridPos, SDL_Surface* sprite) {
     this->sprite = sprite;
 }
 
-Tile::~Tile() {
-}
+Tile::~Tile() {}
 
 void Tile::draw(SDL_Surface* screen) {
     SDL_Rect src;
