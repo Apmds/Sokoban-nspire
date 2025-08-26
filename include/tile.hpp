@@ -3,7 +3,7 @@
 
 #include <SDL/SDL.h>
 
-#define TILE_WIDTH 32
+#define TILE_WIDTH 16
 #define TILE_HEIGHT TILE_WIDTH
 
 enum TileType {
