@@ -26,13 +26,6 @@ void init() {
 	SDL_ShowCursor(SDL_DISABLE);
 }
 
-// Quits the program, unloading what's needed
-void quit(nSDL_Font* font) {
-	nSDL_FreeFont(font);
-
-	SDL_Quit();
-}
-
 int main() {
 	init();
 
@@ -111,7 +104,10 @@ int main() {
 		}
 	}
 
-	quit(font);
+	SDL_FreeSurface(wall_sprite);
+	SDL_FreeSurface(ground_sprite);
+	nSDL_FreeFont(font);
+	SDL_Quit();
 
 	return EXIT_SUCCESS;
 }

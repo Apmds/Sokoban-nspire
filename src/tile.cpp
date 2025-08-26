@@ -1,4 +1,6 @@
 #include "tile.hpp"
+#include "imageLoader.hpp"
+#include "image_data.hpp"
 
 Tile::Tile(vec2 gridPos, SDL_Surface* sprite) {
     this->gridPos = gridPos;
@@ -20,3 +22,31 @@ void Tile::draw(SDL_Surface* screen) {
 
 	SDL_BlitSurface(this->sprite, &src, screen, &pos);
 }
+
+
+MovableTile::MovableTile(vec2 gridPos, SDL_Surface* sprite) : Tile(gridPos, sprite) {}
+MovableTile::~MovableTile() {}
+
+void MovableTile::moveTo(vec2 pos) {
+	this->gridPos = pos;
+}
+
+void MovableTile::moveLeft() {
+	this->gridPos.x--;
+}
+
+void MovableTile::moveRight() {
+	this->gridPos.x++;
+}
+
+void MovableTile::moveUp() {
+	this->gridPos.y--;
+}
+
+void MovableTile::moveDown() {
+	this->gridPos.y++;	
+}
+
+
+Player::Player(vec2 gridPos) : MovableTile(gridPos, ImageLoader::getTexture(image_player)) {}
+Player::~Player() {}

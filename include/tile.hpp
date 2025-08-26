@@ -22,7 +22,7 @@ typedef struct vec2 {
 
 // Base class
 class Tile {
-private:
+protected:
     vec2 gridPos;
     SDL_Surface* sprite;
 public:
@@ -32,6 +32,24 @@ public:
     void draw(SDL_Surface* screen);
 };
 
-// Add movable tiles here
+class MovableTile : Tile {
+public:
+    MovableTile(vec2 gridPos, SDL_Surface* sprite);
+    ~MovableTile();
+    
+    void moveTo(vec2 pos);
+    void moveLeft();
+    void moveRight();
+    void moveUp();
+    void moveDown();
+};
+
+class Player : MovableTile {
+private:
+
+public:
+    Player(vec2 gridPos);
+    ~Player();
+};
 
 #endif
