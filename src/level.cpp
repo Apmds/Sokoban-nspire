@@ -1,12 +1,10 @@
 #include "level.hpp"
 
-Level::Level(int w, int h, TileType* grid, vec2 playerPos, std::vector<vec2> boxes, std::vector<vec2> storages, SDL_Surface* ground_sprite, SDL_Surface* wall_sprite) {
+Level::Level(int w, int h, TileType* grid, vec2 playerPos, std::vector<vec2> boxes, std::vector<vec2> storages, SDL_Surface* ground_sprite, SDL_Surface* wall_sprite) : player(playerPos) {
     this->width = w;
     this->height = h;
     this->grid = grid;
     
-    // this.player = ;
-
     //this->boxes = ;
     //this->storages = ;
     this->ground_sprite = ground_sprite;
@@ -43,4 +41,12 @@ void Level::draw(SDL_Surface* screen) {
         }
         
     }
+
+    // Draw the player
+    this->player.draw(screen, level_offset);
 }
+
+Player& Level::getPlayer() {
+    return this->player;
+}
+

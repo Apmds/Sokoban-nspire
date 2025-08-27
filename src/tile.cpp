@@ -10,6 +10,10 @@ Tile::Tile(vec2 gridPos, SDL_Surface* sprite) {
 Tile::~Tile() {}
 
 void Tile::draw(SDL_Surface* screen) {
+	this->draw(screen, {0, 0});
+}
+
+void Tile::draw(SDL_Surface* screen, vec2 offset) {
     SDL_Rect src;
 	src.x = 0;
 	src.y = 0;
@@ -17,8 +21,8 @@ void Tile::draw(SDL_Surface* screen) {
 	src.h = TILE_HEIGHT;
 
 	SDL_Rect pos;
-	pos.x = this->gridPos.x * TILE_WIDTH;
-	pos.y = this->gridPos.y * TILE_HEIGHT;
+	pos.x = (this->gridPos.x * TILE_WIDTH) + offset.x;
+	pos.y = (this->gridPos.y * TILE_HEIGHT) + offset.y;
 
 	SDL_BlitSurface(this->sprite, &src, screen, &pos);
 }

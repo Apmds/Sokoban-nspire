@@ -10,8 +10,7 @@ private:
     int width;
     int height;
     TileType* grid;
-    // Player player;
-    // 
+    Player player;
     std::vector<Tile> boxes;
     std::vector<Tile> storages;
     SDL_Surface* ground_sprite;
@@ -21,6 +20,8 @@ public:
     ~Level();
 
     void draw(SDL_Surface* screen);
+
+    Player& getPlayer();
 };
 
 

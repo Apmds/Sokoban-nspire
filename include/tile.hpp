@@ -29,10 +29,11 @@ public:
     Tile(vec2 gridPos, SDL_Surface* sprite);
     ~Tile();
 
+    void draw(SDL_Surface* screen, vec2 offset);
     void draw(SDL_Surface* screen);
 };
 
-class MovableTile : Tile {
+class MovableTile : public Tile {
 public:
     MovableTile(vec2 gridPos, SDL_Surface* sprite);
     ~MovableTile();
@@ -44,7 +45,7 @@ public:
     void moveDown();
 };
 
-class Player : MovableTile {
+class Player : public MovableTile {
 private:
 
 public:

@@ -26,6 +26,32 @@ void init() {
 	SDL_ShowCursor(SDL_DISABLE);
 }
 
+void handle_input(SDLKey sym, Level& level) {
+	switch (sym) {
+	case SDLK_UP:
+	case SDLK_8:
+		level.getPlayer().moveUp();
+		break;
+	case SDLK_DOWN:
+	case SDLK_2:
+		level.getPlayer().moveDown();
+		break;
+
+	case SDLK_LEFT:
+	case SDLK_4:
+		level.getPlayer().moveLeft();
+		break;
+
+	case SDLK_RIGHT:
+	case SDLK_6:
+		level.getPlayer().moveRight();
+		break;
+
+	default:
+		break;
+	}
+}
+
 int main() {
 	init();
 
@@ -66,7 +92,7 @@ int main() {
 				if (event.key.keysym.sym == SDLK_ESCAPE) {
 					should_close = SDL_TRUE;
 				}
-				// Put code here to handle key presses with SDLKey event.key.keysym.sym
+				handle_input(event.key.keysym.sym, currLevel);
 				break;
 			default:
 				break;
