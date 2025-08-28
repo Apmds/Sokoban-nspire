@@ -5,8 +5,13 @@ Level::Level(int w, int h, TileType* grid, vec2 playerPos, std::vector<vec2> box
     this->height = h;
     this->grid = grid;
     
-    //this->boxes = ;
-    //this->storages = ;
+    for (vec2 boxPos : boxes) {
+        this->boxes.push_back(Box(boxPos));
+    }
+    for (vec2 storagePos : storages) {
+        this->storages.push_back(Storage(storagePos));
+    }
+
     this->ground_sprite = ground_sprite;
     this->wall_sprite = wall_sprite;
 }
@@ -41,7 +46,15 @@ void Level::draw(SDL_Surface* screen) {
         }
         
     }
-
+    
+    // Draw the boxes and storages
+    for (auto box : this->boxes) {
+        box.draw(screen, level_offset);
+    }
+    for (auto storage : this->storages) {
+        storage.draw(screen, level_offset);
+    }
+    
     // Draw the player
     this->player.draw(screen, level_offset);
 }
@@ -50,3 +63,51 @@ Player& Level::getPlayer() {
     return this->player;
 }
 
+
+void Level::movePlayerUp() {
+    this->player.moveUp();
+    if (this->isPlayerColliding()) {
+        this->player.moveDown();
+    }
+}
+
+void Level::movePlayerDown() {
+    this->player.moveDown();
+    if (this->isPlayerColliding()) {
+        this->player.moveUp();
+    }
+}
+
+void Level::movePlayerLeft() {
+    this->player.moveLeft();
+    if (this->isPlayerColliding()) {
+        this->player.moveRight();
+    }
+}
+
+void Level::movePlayerRight() {
+    this->player.moveRight();
+    if (this->isPlayerColliding()) {
+        this->player.moveLeft();
+    }
+}
+
+bool Level::isPlayerColliding() {
+    vec2 playerPos = this->player.getPosition();
+    int playerGridPos = playerPos.x + (playerPos.y*this->width);
+
+    // In level bounds and inside a wall
+    if (playerGridPos < this->width * this->height && this->grid[playerGridPos] == WALL) {
+        return true;
+    }
+
+    // Inside a box
+    for (Box box : this->boxes) {
+        vec2 boxPos = box.getPosition();
+        if (playerPos.x == boxPos.x && playerPos.y == boxPos.y) {
+            return true;
+        }
+    }
+
+    return false;
+}

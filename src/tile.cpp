@@ -27,6 +27,10 @@ void Tile::draw(SDL_Surface* screen, vec2 offset) {
 	SDL_BlitSurface(this->sprite, &src, screen, &pos);
 }
 
+vec2 Tile::getPosition() {
+	return this->gridPos;
+}
+
 
 MovableTile::MovableTile(vec2 gridPos, SDL_Surface* sprite) : Tile(gridPos, sprite) {}
 MovableTile::~MovableTile() {}
@@ -54,3 +58,11 @@ void MovableTile::moveDown() {
 
 Player::Player(vec2 gridPos) : MovableTile(gridPos, ImageLoader::getTexture(image_player)) {}
 Player::~Player() {}
+
+
+Box::Box(vec2 gridPos) : MovableTile(gridPos, ImageLoader::getTexture(image_box)) {}
+Box::~Box() {}
+
+
+Storage::Storage(vec2 gridPos) : MovableTile(gridPos, ImageLoader::getTexture(image_storage)) {}
+Storage::~Storage() {}

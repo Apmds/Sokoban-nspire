@@ -11,8 +11,8 @@ private:
     int height;
     TileType* grid;
     Player player;
-    std::vector<Tile> boxes;
-    std::vector<Tile> storages;
+    std::vector<Box> boxes;
+    std::vector<Storage> storages;
     SDL_Surface* ground_sprite;
     SDL_Surface* wall_sprite;
 public:
@@ -22,6 +22,12 @@ public:
     void draw(SDL_Surface* screen);
 
     Player& getPlayer();
+    void movePlayerUp();
+    void movePlayerDown();
+    void movePlayerLeft();
+    void movePlayerRight();
+
+    bool isPlayerColliding();
 };
 
 

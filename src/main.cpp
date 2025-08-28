@@ -30,21 +30,21 @@ void handle_input(SDLKey sym, Level& level) {
 	switch (sym) {
 	case SDLK_UP:
 	case SDLK_8:
-		level.getPlayer().moveUp();
+		level.movePlayerUp();
 		break;
 	case SDLK_DOWN:
 	case SDLK_2:
-		level.getPlayer().moveDown();
+		level.movePlayerDown();
 		break;
 
 	case SDLK_LEFT:
 	case SDLK_4:
-		level.getPlayer().moveLeft();
+		level.movePlayerLeft();
 		break;
 
 	case SDLK_RIGHT:
 	case SDLK_6:
-		level.getPlayer().moveRight();
+		level.movePlayerRight();
 		break;
 
 	default:

@@ -31,6 +31,8 @@ public:
 
     void draw(SDL_Surface* screen, vec2 offset);
     void draw(SDL_Surface* screen);
+
+    vec2 getPosition();
 };
 
 class MovableTile : public Tile {
@@ -46,11 +48,21 @@ public:
 };
 
 class Player : public MovableTile {
-private:
-
 public:
     Player(vec2 gridPos);
     ~Player();
+};
+
+class Box : public MovableTile {
+public:
+    Box(vec2 gridPos);
+    ~Box();
+};
+
+class Storage : public MovableTile {
+public:
+    Storage(vec2 gridPos);
+    ~Storage();
 };
 
 #endif
