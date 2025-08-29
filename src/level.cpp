@@ -48,11 +48,11 @@ void Level::draw(SDL_Surface* screen) {
     }
     
     // Draw the boxes and storages
-    for (auto box : this->boxes) {
-        box.draw(screen, level_offset);
-    }
     for (auto storage : this->storages) {
         storage.draw(screen, level_offset);
+    }
+    for (auto box : this->boxes) {
+        box.draw(screen, level_offset);
     }
     
     // Draw the player
@@ -66,48 +66,100 @@ Player& Level::getPlayer() {
 
 void Level::movePlayerUp() {
     this->player.moveUp();
-    if (this->isPlayerColliding()) {
+
+    if (this->isTileColliding(this->player)) {
         this->player.moveDown();
+    }
+
+    // If player is colliding with a box, then move and check collision on it
+    Box* collidingBox = this->getCollidingBox(this->player);
+    if (collidingBox != nullptr) {
+        collidingBox->moveUp();
+        if (this->isTileColliding(*collidingBox) || this->getCollidingBox(*collidingBox) != nullptr) {
+            collidingBox->moveDown();
+            this->player.moveDown();
+            return;
+        }
     }
 }
 
 void Level::movePlayerDown() {
     this->player.moveDown();
-    if (this->isPlayerColliding()) {
+
+    if (this->isTileColliding(this->player)) {
         this->player.moveUp();
+    }
+
+    // If player is colliding with a box, then move and check collision on it
+    Box* collidingBox = this->getCollidingBox(this->player);
+    if (collidingBox != nullptr) {
+        collidingBox->moveDown();
+        if (this->isTileColliding(*collidingBox) || this->getCollidingBox(*collidingBox) != nullptr) {
+            collidingBox->moveUp();
+            this->player.moveUp();
+            return;
+        }
     }
 }
 
 void Level::movePlayerLeft() {
     this->player.moveLeft();
-    if (this->isPlayerColliding()) {
+
+    if (this->isTileColliding(this->player)) {
         this->player.moveRight();
+    }
+
+    // If player is colliding with a box, then move and check collision on it
+    Box* collidingBox = this->getCollidingBox(this->player);
+    if (collidingBox != nullptr) {
+        collidingBox->moveLeft();
+        if (this->isTileColliding(*collidingBox) || this->getCollidingBox(*collidingBox) != nullptr) {
+            collidingBox->moveRight();
+            this->player.moveRight();
+            return;
+        }
     }
 }
 
 void Level::movePlayerRight() {
     this->player.moveRight();
-    if (this->isPlayerColliding()) {
+    
+    if (this->isTileColliding(this->player)) {
         this->player.moveLeft();
-    }
-}
-
-bool Level::isPlayerColliding() {
-    vec2 playerPos = this->player.getPosition();
-    int playerGridPos = playerPos.x + (playerPos.y*this->width);
-
-    // In level bounds and inside a wall
-    if (playerGridPos < this->width * this->height && this->grid[playerGridPos] == WALL) {
-        return true;
+        return;
     }
 
-    // Inside a box
-    for (Box box : this->boxes) {
-        vec2 boxPos = box.getPosition();
-        if (playerPos.x == boxPos.x && playerPos.y == boxPos.y) {
-            return true;
+    // If player is colliding with a box, then move and check collision on it
+    Box* collidingBox = this->getCollidingBox(this->player);
+    if (collidingBox != nullptr) {
+        collidingBox->moveRight();
+        if (this->isTileColliding(*collidingBox) || this->getCollidingBox(*collidingBox) != nullptr) {
+            collidingBox->moveLeft();
+            this->player.moveLeft();
+            return;
         }
     }
 
+}
+
+bool Level::isTileColliding(Tile tile) {
+    vec2 tilePos = tile.getPosition();
+    int tileGridPos = tilePos.x + (tilePos.y*this->width);
+
+    // In level bounds and inside a wall
+    if (tileGridPos < this->width * this->height && tileGridPos > 0 && this->grid[tileGridPos] == WALL) {
+        return true;
+    }
+
     return false;
+}
+
+Box* Level::getCollidingBox(Tile tile) {
+    for (auto& box : this->boxes) {
+        if (tile.getId() != box.getId() && tile.getPosition().x == box.getPosition().x && tile.getPosition().y == box.getPosition().y) {
+            return &box;
+        }
+    }
+
+    return nullptr;
 }

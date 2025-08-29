@@ -31,7 +31,8 @@ static std::vector<vec2> level1storages = {
     {1, 4},
     {4, 5},
     {4, 7},
-    {6, 5},
+    {3, 6},
+    {6, 6},
 };
 static vec2 level1playerPos = {2, 2};
 

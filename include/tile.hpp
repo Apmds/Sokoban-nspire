@@ -25,6 +25,7 @@ class Tile {
 protected:
     vec2 gridPos;
     SDL_Surface* sprite;
+    int id;
 public:
     Tile(vec2 gridPos, SDL_Surface* sprite);
     ~Tile();
@@ -33,6 +34,7 @@ public:
     void draw(SDL_Surface* screen);
 
     vec2 getPosition();
+    int getId();
 };
 
 class MovableTile : public Tile {

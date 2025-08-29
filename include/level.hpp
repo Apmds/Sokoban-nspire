@@ -15,6 +15,9 @@ private:
     std::vector<Storage> storages;
     SDL_Surface* ground_sprite;
     SDL_Surface* wall_sprite;
+    
+    bool isTileColliding(Tile tile);
+    Box* getCollidingBox(Tile tile);
 public:
     Level(int w, int h, TileType* grid, vec2 playerPos, std::vector<vec2> boxes, std::vector<vec2> storages, SDL_Surface* ground_sprite, SDL_Surface* wall_sprite);
     ~Level();
@@ -27,7 +30,6 @@ public:
     void movePlayerLeft();
     void movePlayerRight();
 
-    bool isPlayerColliding();
 };
 
 

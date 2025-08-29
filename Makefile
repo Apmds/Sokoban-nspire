@@ -12,7 +12,7 @@ BUILDDIR = build
 DISTDIR  = bin
 EXE      = sokoban
 
-GCCFLAGS = -Wall -W -marm -I$(INC_DIR)
+GCCFLAGS = -Wall -W -marm -I$(INC_DIR) -MMD -MP
 LDFLAGS  =
 ZEHNFLAGS = --name "sokoban"
 
@@ -29,6 +29,8 @@ ASM_SRCS = $(shell find $(SRC_DIR) -name '*.S')
 OBJS  = $(patsubst $(SRC_DIR)/%.c,$(BUILDDIR)/%.o,$(C_SRCS))
 OBJS += $(patsubst $(SRC_DIR)/%.cpp,$(BUILDDIR)/%.o,$(CPP_SRCS))
 OBJS += $(patsubst $(SRC_DIR)/%.S,$(BUILDDIR)/%.o,$(ASM_SRCS))
+
+DEPS = $(OBJS:.o=.d)
 
 all: $(DISTDIR)/$(EXE).tns
 
@@ -61,3 +63,6 @@ $(DISTDIR)/$(EXE).tns: $(BUILDDIR)/$(EXE).elf
 
 clean:
 	rm -rf $(BUILDDIR) $(DISTDIR)/$(EXE).tns
+
+# Include dependency files if they exist
+-include $(DEPS)

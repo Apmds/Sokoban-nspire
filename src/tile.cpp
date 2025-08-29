@@ -2,9 +2,12 @@
 #include "imageLoader.hpp"
 #include "image_data.hpp"
 
+static int tileid = 0;
+
 Tile::Tile(vec2 gridPos, SDL_Surface* sprite) {
     this->gridPos = gridPos;
     this->sprite = sprite;
+	this->id = tileid++;
 }
 
 Tile::~Tile() {}
@@ -31,6 +34,9 @@ vec2 Tile::getPosition() {
 	return this->gridPos;
 }
 
+int Tile::getId() {
+	return this->id;
+}
 
 MovableTile::MovableTile(vec2 gridPos, SDL_Surface* sprite) : Tile(gridPos, sprite) {}
 MovableTile::~MovableTile() {}
