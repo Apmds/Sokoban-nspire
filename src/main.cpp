@@ -5,6 +5,7 @@
 #include <SDL/SDL_config.h>
 #include <SDL/SDL.h>
 #include <math.h>
+#include "imageLoader.hpp"
 
 SDL_Surface* screen;
 
@@ -111,6 +112,12 @@ int main() {
 		nSDL_DrawString(screen, font, 10, 10, "FPS: %d \x1", framerate);
 		nSDL_DrawString(screen, font, 10, 20, "Press esc to exit... \x1");
 		
+		if (currLevel.isCompleted()) {
+			nSDL_DrawString(screen, font, 100, 120, "\x1 \x1 Yay, the level is completed! \x1 \x1");
+			SDL_Flip(screen);
+			SDL_Delay(2000);
+			break;
+		}
 		
 		SDL_Flip(screen);
 		
@@ -133,6 +140,7 @@ int main() {
 	SDL_FreeSurface(wall_sprite);
 	SDL_FreeSurface(ground_sprite);
 	nSDL_FreeFont(font);
+	ImageLoader::unloadAllTextures();
 	SDL_Quit();
 
 	return EXIT_SUCCESS;

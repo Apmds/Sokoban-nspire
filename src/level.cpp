@@ -4,6 +4,7 @@ Level::Level(int w, int h, TileType* grid, vec2 playerPos, std::vector<vec2> box
     this->width = w;
     this->height = h;
     this->grid = grid;
+    this->is_completed = false;
     
     for (vec2 boxPos : boxes) {
         this->boxes.push_back(Box(boxPos));
@@ -73,14 +74,17 @@ void Level::movePlayerUp() {
 
     // If player is colliding with a box, then move and check collision on it
     Box* collidingBox = this->getCollidingBox(this->player);
-    if (collidingBox != nullptr) {
-        collidingBox->moveUp();
-        if (this->isTileColliding(*collidingBox) || this->getCollidingBox(*collidingBox) != nullptr) {
-            collidingBox->moveDown();
-            this->player.moveDown();
-            return;
-        }
+    if (collidingBox == nullptr) {
+        return;
     }
+
+    collidingBox->moveUp();
+    if (this->isTileColliding(*collidingBox) || this->getCollidingBox(*collidingBox) != nullptr) {
+        collidingBox->moveDown();
+        this->player.moveDown();
+        return;
+    }
+    this->updateBox(collidingBox);
 }
 
 void Level::movePlayerDown() {
@@ -92,14 +96,17 @@ void Level::movePlayerDown() {
 
     // If player is colliding with a box, then move and check collision on it
     Box* collidingBox = this->getCollidingBox(this->player);
-    if (collidingBox != nullptr) {
-        collidingBox->moveDown();
-        if (this->isTileColliding(*collidingBox) || this->getCollidingBox(*collidingBox) != nullptr) {
-            collidingBox->moveUp();
-            this->player.moveUp();
-            return;
-        }
+    if (collidingBox == nullptr) {
+        return;
     }
+
+    collidingBox->moveDown();
+    if (this->isTileColliding(*collidingBox) || this->getCollidingBox(*collidingBox) != nullptr) {
+        collidingBox->moveUp();
+        this->player.moveUp();
+        return;
+    }
+    this->updateBox(collidingBox);
 }
 
 void Level::movePlayerLeft() {
@@ -108,17 +115,21 @@ void Level::movePlayerLeft() {
     if (this->isTileColliding(this->player)) {
         this->player.moveRight();
     }
+    
 
     // If player is colliding with a box, then move and check collision on it
     Box* collidingBox = this->getCollidingBox(this->player);
-    if (collidingBox != nullptr) {
-        collidingBox->moveLeft();
-        if (this->isTileColliding(*collidingBox) || this->getCollidingBox(*collidingBox) != nullptr) {
-            collidingBox->moveRight();
-            this->player.moveRight();
-            return;
-        }
+    if (collidingBox == nullptr) {
+        return;
     }
+
+    collidingBox->moveLeft();
+    if (this->isTileColliding(*collidingBox) || this->getCollidingBox(*collidingBox) != nullptr) {
+        collidingBox->moveRight();
+        this->player.moveRight();
+        return;
+    }
+    this->updateBox(collidingBox);
 }
 
 void Level::movePlayerRight() {
@@ -131,15 +142,18 @@ void Level::movePlayerRight() {
 
     // If player is colliding with a box, then move and check collision on it
     Box* collidingBox = this->getCollidingBox(this->player);
-    if (collidingBox != nullptr) {
-        collidingBox->moveRight();
-        if (this->isTileColliding(*collidingBox) || this->getCollidingBox(*collidingBox) != nullptr) {
-            collidingBox->moveLeft();
-            this->player.moveLeft();
-            return;
-        }
+    if (collidingBox == nullptr) {
+        return;
     }
 
+    
+    collidingBox->moveRight();
+    if (this->isTileColliding(*collidingBox) || this->getCollidingBox(*collidingBox) != nullptr) {
+        collidingBox->moveLeft();
+        this->player.moveLeft();
+        return;
+    }
+    this->updateBox(collidingBox);
 }
 
 bool Level::isTileColliding(Tile tile) {
@@ -162,4 +176,26 @@ Box* Level::getCollidingBox(Tile tile) {
     }
 
     return nullptr;
+}
+
+bool Level::isCompleted() {
+    return this->is_completed;
+}
+
+void Level::updateBox(Box* box) {
+    box->placed = false;
+    for (auto storage : storages) {
+        if (storage.getPosition().x == box->getPosition().x && storage.getPosition().y == box->getPosition().y) {
+            box->placed = true;
+            break;
+        }
+    }
+
+    this->is_completed = true;
+    for (auto box : boxes) {
+        if (!box.placed) {
+            this->is_completed = false;
+            break;
+        }
+    }
 }

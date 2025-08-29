@@ -66,9 +66,11 @@ Player::Player(vec2 gridPos) : MovableTile(gridPos, ImageLoader::getTexture(imag
 Player::~Player() {}
 
 
-Box::Box(vec2 gridPos) : MovableTile(gridPos, ImageLoader::getTexture(image_box)) {}
+Box::Box(vec2 gridPos) : MovableTile(gridPos, ImageLoader::getTexture(image_box)) {
+	this->placed = false;
+}
 Box::~Box() {}
 
 
-Storage::Storage(vec2 gridPos) : MovableTile(gridPos, ImageLoader::getTexture(image_storage)) {}
+Storage::Storage(vec2 gridPos) : Tile(gridPos, ImageLoader::getTexture(image_storage)) {}
 Storage::~Storage() {}

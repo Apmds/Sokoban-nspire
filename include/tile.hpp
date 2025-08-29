@@ -59,9 +59,11 @@ class Box : public MovableTile {
 public:
     Box(vec2 gridPos);
     ~Box();
+
+    bool placed;
 };
 
-class Storage : public MovableTile {
+class Storage : public Tile {
 public:
     Storage(vec2 gridPos);
     ~Storage();
