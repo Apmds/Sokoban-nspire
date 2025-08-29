@@ -21,7 +21,7 @@ private:
     Box* getCollidingBox(Tile tile);
     void updateBox(Box* box);
 public:
-    Level(int w, int h, TileType* grid, vec2 playerPos, std::vector<vec2> boxes, std::vector<vec2> storages, SDL_Surface* ground_sprite, SDL_Surface* wall_sprite);
+    Level(int w, int h, TileType* grid, vec2 playerPos, std::vector<vec2> boxes, std::vector<vec2> storages);
     ~Level();
 
     void draw(SDL_Surface* screen);

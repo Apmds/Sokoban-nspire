@@ -1,6 +1,8 @@
 #include "level.hpp"
+#include "image_data.hpp"
+#include "imageLoader.hpp"
 
-Level::Level(int w, int h, TileType* grid, vec2 playerPos, std::vector<vec2> boxes, std::vector<vec2> storages, SDL_Surface* ground_sprite, SDL_Surface* wall_sprite) : player(playerPos) {
+Level::Level(int w, int h, TileType* grid, vec2 playerPos, std::vector<vec2> boxes, std::vector<vec2> storages) : player(playerPos) {
     this->width = w;
     this->height = h;
     this->grid = grid;
@@ -13,8 +15,8 @@ Level::Level(int w, int h, TileType* grid, vec2 playerPos, std::vector<vec2> box
         this->storages.push_back(Storage(storagePos));
     }
 
-    this->ground_sprite = ground_sprite;
-    this->wall_sprite = wall_sprite;
+    this->ground_sprite = ImageLoader::getTexture(image_ground);
+    this->wall_sprite = ImageLoader::getTexture(image_wall);
 }
 
 Level::~Level() {

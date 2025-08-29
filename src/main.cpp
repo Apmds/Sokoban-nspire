@@ -1,11 +1,11 @@
 #include <os.h>
-#include "image_data.hpp"
 #include "level.hpp"
 #include "level_data.hpp"
 #include <SDL/SDL_config.h>
 #include <SDL/SDL.h>
 #include <math.h>
 #include "imageLoader.hpp"
+#include <stdexcept>
 
 SDL_Surface* screen;
 
@@ -53,6 +53,17 @@ void handle_input(SDLKey sym, Level& level) {
 	}
 }
 
+Level load_level(int num) {
+	switch (num) {
+	case 1:
+		return Level(level1size.x, level1size.y, level1map, level1playerPos, level1boxes, level1storages);
+	case 2:
+		return Level(level2size.x, level2size.y, level2map, level2playerPos, level2boxes, level2storages);
+	default:
+		throw std::invalid_argument("Unknown level number.");
+	}
+}
+
 int main() {
 	init();
 
@@ -62,17 +73,7 @@ int main() {
 
 	SDL_bool should_close = SDL_FALSE;
 
-	SDL_Surface* ground_sprite = nSDL_LoadImage(image_ground);
-	if (ground_sprite == NULL) {
-		return EXIT_FAILURE;
-	}
-	SDL_Surface* wall_sprite = nSDL_LoadImage(image_wall);
-	if (wall_sprite == NULL) {
-		return EXIT_FAILURE;
-	}
-
-	Level currLevel(level1size.x, level1size.y, level1map, level1playerPos, level1boxes, level1storages, ground_sprite, wall_sprite);
-
+	Level currLevel = load_level(1);	
 
 	// Deltatime / framerate vars
 	Uint32 last_time = SDL_GetTicks();
@@ -113,10 +114,11 @@ int main() {
 		nSDL_DrawString(screen, font, 10, 20, "Press esc to exit... \x1");
 		
 		if (currLevel.isCompleted()) {
-			nSDL_DrawString(screen, font, 100, 120, "\x1 \x1 Yay, the level is completed! \x1 \x1");
+			nSDL_DrawString(screen, font, 60, 120, "\x1 \x1 Yay, the level is completed! \x1 \x1");
 			SDL_Flip(screen);
-			SDL_Delay(2000);
-			break;
+			SDL_Delay(1000);
+			currLevel = load_level(2);
+			continue;
 		}
 		
 		SDL_Flip(screen);
@@ -137,8 +139,6 @@ int main() {
 		}
 	}
 
-	SDL_FreeSurface(wall_sprite);
-	SDL_FreeSurface(ground_sprite);
 	nSDL_FreeFont(font);
 	ImageLoader::unloadAllTextures();
 	SDL_Quit();
