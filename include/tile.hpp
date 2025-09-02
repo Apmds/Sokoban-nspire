@@ -12,6 +12,13 @@ enum TileType {
     STORAGE,
 };
 
+enum PlayerDirection {
+    DIR_DOWN = 0,
+    DIR_UP,
+    DIR_LEFT,
+    DIR_RIGHT,
+};
+
 
 typedef struct vec2 {
     int x;
@@ -48,15 +55,29 @@ public:
 };
 
 class Player : public MovableTile {
+private:
+    PlayerDirection direction;
 public:
     Player(vec2 gridPos);
     ~Player();
+
+    void draw(SDL_Surface* screen, vec2 offset);
+    void moveLeft();
+    void moveRight();
+    void moveUp();
+    void moveDown();
+
+    void moveLeft(bool change_direction);
+    void moveRight(bool change_direction);
+    void moveUp(bool change_direction);
+    void moveDown(bool change_direction);
 };
 
 class Box : public MovableTile {
 public:
     Box(vec2 gridPos);
     ~Box();
+
     void draw(SDL_Surface* screen, vec2 offset);
 
     bool placed;

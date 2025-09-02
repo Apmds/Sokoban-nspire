@@ -63,7 +63,7 @@ void Level::movePlayerUp() {
     this->player.moveUp();
 
     if (this->isTileColliding(this->player)) {
-        this->player.moveDown();
+        this->player.moveDown(false);
     }
 
     // If player is colliding with a box, then move and check collision on it
@@ -75,7 +75,7 @@ void Level::movePlayerUp() {
     collidingBox->moveUp();
     if (this->isTileColliding(*collidingBox) || this->getCollidingBox(*collidingBox) != nullptr) {
         collidingBox->moveDown();
-        this->player.moveDown();
+        this->player.moveDown(false);
         return;
     }
     this->updateBox(collidingBox);
@@ -85,7 +85,7 @@ void Level::movePlayerDown() {
     this->player.moveDown();
 
     if (this->isTileColliding(this->player)) {
-        this->player.moveUp();
+        this->player.moveUp(false);
     }
 
     // If player is colliding with a box, then move and check collision on it
@@ -97,7 +97,7 @@ void Level::movePlayerDown() {
     collidingBox->moveDown();
     if (this->isTileColliding(*collidingBox) || this->getCollidingBox(*collidingBox) != nullptr) {
         collidingBox->moveUp();
-        this->player.moveUp();
+        this->player.moveUp(false);
         return;
     }
     this->updateBox(collidingBox);
@@ -107,7 +107,7 @@ void Level::movePlayerLeft() {
     this->player.moveLeft();
 
     if (this->isTileColliding(this->player)) {
-        this->player.moveRight();
+        this->player.moveRight(false);
     }
     
 
@@ -120,7 +120,7 @@ void Level::movePlayerLeft() {
     collidingBox->moveLeft();
     if (this->isTileColliding(*collidingBox) || this->getCollidingBox(*collidingBox) != nullptr) {
         collidingBox->moveRight();
-        this->player.moveRight();
+        this->player.moveRight(false);
         return;
     }
     this->updateBox(collidingBox);
@@ -130,7 +130,7 @@ void Level::movePlayerRight() {
     this->player.moveRight();
     
     if (this->isTileColliding(this->player)) {
-        this->player.moveLeft();
+        this->player.moveLeft(false);
         return;
     }
 
@@ -144,7 +144,7 @@ void Level::movePlayerRight() {
     collidingBox->moveRight();
     if (this->isTileColliding(*collidingBox) || this->getCollidingBox(*collidingBox) != nullptr) {
         collidingBox->moveLeft();
-        this->player.moveLeft();
+        this->player.moveLeft(false);
         return;
     }
     this->updateBox(collidingBox);

@@ -55,8 +55,62 @@ void MovableTile::moveDown() {
 }
 
 
-Player::Player(vec2 gridPos) : MovableTile(gridPos, ImageManager::getTexture(image_player)) {}
+Player::Player(vec2 gridPos) : MovableTile(gridPos, ImageManager::getTexture(image_player)) {
+	this->direction = DIR_DOWN;
+}
 Player::~Player() {}
+
+void Player::draw(SDL_Surface* screen, vec2 offset) {
+	ImageManager::drawTexture(this->sprite, screen, 
+		(this->gridPos.x * TILE_WIDTH) + offset.x,
+		(this->gridPos.y * TILE_HEIGHT) + offset.y,
+		this->direction
+	);
+}
+
+void Player::moveLeft() {
+	this->moveLeft(true);
+}
+
+void Player::moveRight() {
+	this->moveRight(true);
+}
+
+void Player::moveUp() {
+	this->moveUp(true);
+}
+
+void Player::moveDown() {
+	this->moveDown(true);
+}
+
+void Player::moveLeft(bool change_direction) {
+	if (change_direction) {
+		this->direction = DIR_LEFT;
+	}
+	MovableTile::moveLeft();
+}
+
+void Player::moveRight(bool change_direction) {
+	if (change_direction) {
+		this->direction = DIR_RIGHT;
+	}
+	MovableTile::moveRight();
+}
+
+void Player::moveUp(bool change_direction) {
+	if (change_direction) {
+		this->direction = DIR_UP;
+	}
+	MovableTile::moveUp();
+}
+
+void Player::moveDown(bool change_direction) {
+	if (change_direction) {
+		this->direction = DIR_DOWN;
+	}
+	MovableTile::moveDown();
+}
 
 
 Box::Box(vec2 gridPos) : MovableTile(gridPos, ImageManager::getTexture(image_box)) {
