@@ -1,6 +1,6 @@
 #include "level.hpp"
 #include "image_data.hpp"
-#include "imageLoader.hpp"
+#include "image_manager.hpp"
 
 Level::Level(int w, int h, TileType* grid, vec2 playerPos, std::vector<vec2> boxes, std::vector<vec2> storages) : player(playerPos) {
     this->width = w;
@@ -15,8 +15,8 @@ Level::Level(int w, int h, TileType* grid, vec2 playerPos, std::vector<vec2> box
         this->storages.push_back(Storage(storagePos));
     }
 
-    this->ground_sprite = ImageLoader::getTexture(image_ground);
-    this->wall_sprite = ImageLoader::getTexture(image_wall);
+    this->ground_sprite = ImageManager::getTexture(image_ground);
+    this->wall_sprite = ImageManager::getTexture(image_wall);
 }
 
 Level::~Level() {
@@ -26,28 +26,20 @@ void Level::draw(SDL_Surface* screen) {
     // Draw the grid centered
     vec2 level_offset = {(320 - (this->width*TILE_WIDTH)) / 2, (240 - (this->height*TILE_HEIGHT)) / 2};
     for (int i = 0; i < this->width*this->height; i++) {
-        SDL_Rect src;
-        src.x = 0;
-        src.y = 0;
-        src.w = TILE_WIDTH;
-        src.h = TILE_HEIGHT;
-
-        SDL_Rect pos;
-        pos.x = ((i % this->width) * TILE_WIDTH) + level_offset.x;
-        pos.y = ((i / this->width) * TILE_HEIGHT) + level_offset.y;
-
+        
+        SDL_Surface* tex;
         switch (this->grid[i]) {
-        case GROUND:
-	        SDL_BlitSurface(this->ground_sprite, &src, screen, &pos);
-            break;
-        case WALL:
-        	SDL_BlitSurface(this->wall_sprite, &src, screen, &pos);
-            break;
-        
-        default:    // Ignore invalid static tiles
-            break;
+            case GROUND:
+                tex = this->ground_sprite;
+                break;
+            case WALL:
+                tex = this->wall_sprite;
+                break;
+            
+            default:    // Ignore invalid static tiles
+                continue;
         }
-        
+        ImageManager::drawTexture(tex, screen, ((i % this->width) * TILE_WIDTH) + level_offset.x, ((i / this->width) * TILE_HEIGHT) + level_offset.y);
     }
     
     // Draw the boxes and storages

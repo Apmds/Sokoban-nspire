@@ -4,7 +4,7 @@
 #include <SDL/SDL_config.h>
 #include <SDL/SDL.h>
 #include <math.h>
-#include "imageLoader.hpp"
+#include "image_manager.hpp"
 #include <stdexcept>
 
 SDL_Surface* screen;
@@ -140,7 +140,7 @@ int main() {
 	}
 
 	nSDL_FreeFont(font);
-	ImageLoader::unloadAllTextures();
+	ImageManager::unloadAllTextures();
 	SDL_Quit();
 
 	return EXIT_SUCCESS;

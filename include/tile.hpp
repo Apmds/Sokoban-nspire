@@ -3,8 +3,6 @@
 
 #include <SDL/SDL.h>
 
-#define TILE_WIDTH 16
-#define TILE_HEIGHT TILE_WIDTH
 
 enum TileType {
     PLAYER = 0,
@@ -59,6 +57,7 @@ class Box : public MovableTile {
 public:
     Box(vec2 gridPos);
     ~Box();
+    void draw(SDL_Surface* screen, vec2 offset);
 
     bool placed;
 };

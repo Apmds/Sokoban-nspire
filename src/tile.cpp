@@ -1,5 +1,5 @@
 #include "tile.hpp"
-#include "imageLoader.hpp"
+#include "image_manager.hpp"
 #include "image_data.hpp"
 
 static int tileid = 0;
@@ -17,17 +17,10 @@ void Tile::draw(SDL_Surface* screen) {
 }
 
 void Tile::draw(SDL_Surface* screen, vec2 offset) {
-    SDL_Rect src;
-	src.x = 0;
-	src.y = 0;
-	src.w = TILE_WIDTH;
-	src.h = TILE_HEIGHT;
-
-	SDL_Rect pos;
-	pos.x = (this->gridPos.x * TILE_WIDTH) + offset.x;
-	pos.y = (this->gridPos.y * TILE_HEIGHT) + offset.y;
-
-	SDL_BlitSurface(this->sprite, &src, screen, &pos);
+	ImageManager::drawTexture(this->sprite, screen, 
+		(this->gridPos.x * TILE_WIDTH) + offset.x,
+		(this->gridPos.y * TILE_HEIGHT) + offset.y
+	);
 }
 
 vec2 Tile::getPosition() {
@@ -62,15 +55,23 @@ void MovableTile::moveDown() {
 }
 
 
-Player::Player(vec2 gridPos) : MovableTile(gridPos, ImageLoader::getTexture(image_player)) {}
+Player::Player(vec2 gridPos) : MovableTile(gridPos, ImageManager::getTexture(image_player)) {}
 Player::~Player() {}
 
 
-Box::Box(vec2 gridPos) : MovableTile(gridPos, ImageLoader::getTexture(image_box)) {
+Box::Box(vec2 gridPos) : MovableTile(gridPos, ImageManager::getTexture(image_box)) {
 	this->placed = false;
 }
 Box::~Box() {}
 
+void Box::draw(SDL_Surface* screen, vec2 offset) {
+	ImageManager::drawTexture(this->sprite, screen, 
+		(this->gridPos.x * TILE_WIDTH) + offset.x,
+		(this->gridPos.y * TILE_HEIGHT) + offset.y,
+		this->placed ? 1 : 0
+	);
+}
 
-Storage::Storage(vec2 gridPos) : Tile(gridPos, ImageLoader::getTexture(image_storage)) {}
+
+Storage::Storage(vec2 gridPos) : Tile(gridPos, ImageManager::getTexture(image_storage)) {}
 Storage::~Storage() {}
