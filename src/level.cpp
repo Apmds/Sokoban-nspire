@@ -39,7 +39,7 @@ void Level::draw(SDL_Surface* screen) {
             default:    // Ignore invalid static tiles
                 continue;
         }
-        ImageManager::drawTexture(tex, screen, ((i % this->width) * TILE_WIDTH) + level_offset.x, ((i / this->width) * TILE_HEIGHT) + level_offset.y);
+        ImageManager::drawTile(tex, screen, ((i % this->width) * TILE_WIDTH) + level_offset.x, ((i / this->width) * TILE_HEIGHT) + level_offset.y);
     }
     
     // Draw the boxes and storages

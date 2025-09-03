@@ -12,5 +12,6 @@ extern unsigned short image_storage[];
 
 extern unsigned short image_player[];
 
+extern unsigned short image_title[];
 
 #endif

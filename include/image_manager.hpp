@@ -7,13 +7,14 @@
 #define TILE_HEIGHT TILE_WIDTH
 
 namespace ImageManager {
-    SDL_Surface* getTexture(Uint16* tex_data);
-    void unloadTexture(Uint16* tex_data);
+    SDL_Surface* getTexture(Uint16* tex_data);      // Returns a newly loaded or previously cached texture based on the byte data
+    void unloadTexture(Uint16* tex_data);           // Unloads a previously loaded texture
 
-    void unloadAllTextures();
+    void unloadAllTextures();       // Calls ImageManager::unloadTexture() on all loaded textures
 
-    void drawTexture(SDL_Surface* tex, SDL_Surface* screen, int x, int y);
-    void drawTexture(SDL_Surface* tex, SDL_Surface* screen, int x, int y, int tex_id);
+    void drawTile(SDL_Surface* tex, SDL_Surface* screen, int x, int y);                 // Draws the first tile of a tile texture to the screen
+    void drawTile(SDL_Surface* tex, SDL_Surface* screen, int x, int y, int tile_id);    // Draws a tile of a tile texture to the screen
+    void drawTexture(SDL_Surface* tex, SDL_Surface* screen, int x, int y);              // Draws a texture to the screen
 }
 
 #endif

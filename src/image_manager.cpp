@@ -35,16 +35,30 @@ void ImageManager::unloadAllTextures() {
     map.clear();
 }
 
-void ImageManager::drawTexture(SDL_Surface* tex, SDL_Surface* screen, int x, int y) {
-    drawTexture(tex, screen, x, y, 0);
+void ImageManager::drawTile(SDL_Surface* tex, SDL_Surface* screen, int x, int y) {
+    drawTile(tex, screen, x, y, 0);
 }
 
-void ImageManager::drawTexture(SDL_Surface* tex, SDL_Surface* screen, int x, int y, int tex_id) {
+void ImageManager::drawTile(SDL_Surface* tex, SDL_Surface* screen, int x, int y, int tile_id) {
     SDL_Rect src;
-	src.x = tex_id * TILE_WIDTH;
+	src.x = tile_id * TILE_WIDTH;
 	src.y = 0;
 	src.w = TILE_WIDTH;
 	src.h = TILE_HEIGHT;
+
+	SDL_Rect pos;
+	pos.x = x;
+	pos.y = y;
+
+	SDL_BlitSurface(tex, &src, screen, &pos);
+}
+
+void ImageManager::drawTexture(SDL_Surface* tex, SDL_Surface* screen, int x, int y) {
+    SDL_Rect src;
+	src.x = 0;
+	src.y = 0;
+	src.w = tex->w;
+	src.h = tex->h;
 
 	SDL_Rect pos;
 	pos.x = x;

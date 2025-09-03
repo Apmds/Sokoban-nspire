@@ -17,7 +17,7 @@ void Tile::draw(SDL_Surface* screen) {
 }
 
 void Tile::draw(SDL_Surface* screen, vec2 offset) {
-	ImageManager::drawTexture(this->sprite, screen, 
+	ImageManager::drawTile(this->sprite, screen, 
 		(this->gridPos.x * TILE_WIDTH) + offset.x,
 		(this->gridPos.y * TILE_HEIGHT) + offset.y
 	);
@@ -61,7 +61,7 @@ Player::Player(vec2 gridPos) : MovableTile(gridPos, ImageManager::getTexture(ima
 Player::~Player() {}
 
 void Player::draw(SDL_Surface* screen, vec2 offset) {
-	ImageManager::drawTexture(this->sprite, screen, 
+	ImageManager::drawTile(this->sprite, screen, 
 		(this->gridPos.x * TILE_WIDTH) + offset.x,
 		(this->gridPos.y * TILE_HEIGHT) + offset.y,
 		this->direction
@@ -119,7 +119,7 @@ Box::Box(vec2 gridPos) : MovableTile(gridPos, ImageManager::getTexture(image_box
 Box::~Box() {}
 
 void Box::draw(SDL_Surface* screen, vec2 offset) {
-	ImageManager::drawTexture(this->sprite, screen, 
+	ImageManager::drawTile(this->sprite, screen, 
 		(this->gridPos.x * TILE_WIDTH) + offset.x,
 		(this->gridPos.y * TILE_HEIGHT) + offset.y,
 		this->placed ? 1 : 0
