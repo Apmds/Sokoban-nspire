@@ -15,6 +15,15 @@ Level::Level(int w, int h, TileType* grid, vec2 playerPos, std::vector<vec2> box
         this->storages.push_back(Storage(storagePos));
     }
 
+    for (Box& box : this->boxes) {
+        for (Storage storage : this->storages) {
+            if (storage.getPosition().x == box.getPosition().x && storage.getPosition().y == box.getPosition().y) {
+                box.placed = true;
+                break;
+            }
+        }
+    }
+
     this->ground_sprite = ImageManager::getTexture(image_ground);
     this->wall_sprite = ImageManager::getTexture(image_wall);
 }
