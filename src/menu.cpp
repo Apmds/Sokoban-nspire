@@ -21,10 +21,34 @@ std::unique_ptr<Menu> MainMenu::update(Uint32 delta_time) {
 
 void MainMenu::draw(SDL_Surface* screen) {
     // Clear screen
-    SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 242, 147, 185));
+    SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 28, 43, 58));
 
-    // UI
-    ImageManager::drawTexture(ImageManager::getTexture(image_title), screen, 0, 0);
+    SDL_Surface* wall_tex = ImageManager::getTexture(image_wall);
+    SDL_Surface* ground_tex = ImageManager::getTexture(image_ground);
+
+    // Side walls
+    for (int i = 0; i < 15; i++) {
+        ImageManager::drawTile(wall_tex, screen, 0, i*TILE_HEIGHT);
+        ImageManager::drawTile(wall_tex, screen, 19*TILE_WIDTH, i*TILE_HEIGHT);
+    }
+
+    // Title background
+    for (int i = 4; i < 16; i++) {
+        ImageManager::drawTile(wall_tex, screen, i*TILE_WIDTH, 2*TILE_HEIGHT);
+        ImageManager::drawTile(wall_tex, screen, i*TILE_WIDTH, 6*TILE_HEIGHT);
+    }
+    for (int i = 3; i < 6; i++) {
+        ImageManager::drawTile(wall_tex, screen, 4*TILE_WIDTH, i*TILE_HEIGHT);
+        ImageManager::drawTile(wall_tex, screen, 15*TILE_WIDTH, i*TILE_HEIGHT);
+    }
+    for (int i = 5; i < 15; i++) {
+        ImageManager::drawTile(ground_tex, screen, i*TILE_WIDTH, 3*TILE_HEIGHT);
+        ImageManager::drawTile(ground_tex, screen, i*TILE_WIDTH, 4*TILE_HEIGHT);
+        ImageManager::drawTile(ground_tex, screen, i*TILE_WIDTH, 5*TILE_HEIGHT);
+    }
+
+    // Title
+    ImageManager::drawTexture(ImageManager::getTexture(image_title), screen, 90, 54);
     
     SDL_Flip(screen);
 }
@@ -47,7 +71,7 @@ void LevelSelectMenu::draw(SDL_Surface* screen) {
     // TODO: draw the level selection
     
     // Clear screen
-    SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
+    SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 28, 43, 58));
     
     SDL_Flip(screen);
 }
