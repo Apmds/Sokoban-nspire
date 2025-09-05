@@ -6,6 +6,15 @@
 
 #define LEVEL_COMPLETE_DELAY 1000 // milliseconds needed to wait after completing a level
 
+MainMenu::MainMenu() {
+    this->font = FontManager::loadFont(image_font, 7, 9, 225, 114, 91);
+    
+}
+
+MainMenu::~MainMenu() {
+    FontManager::unloadFont(this->font);
+}
+
 std::unique_ptr<Menu> MainMenu::input(SDLKey sym) {
     // TODO: update properly with input
     if (sym == SDLK_RETURN) {
@@ -49,6 +58,8 @@ void MainMenu::draw(SDL_Surface* screen) {
 
     // Title
     ImageManager::drawTexture(ImageManager::getTexture(image_title), screen, 90, 54);
+
+    FontManager::drawText(screen, this->font, 30, 30, "Play");
     
     SDL_Flip(screen);
 }

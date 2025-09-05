@@ -1,8 +1,9 @@
 #ifndef MENU_HPP
 #define MENU_HPP
 
-#include <SDL/SDL.h>
 #include "level.hpp"
+#include "font_manager.hpp"
+#include <SDL/SDL.h>
 #include <memory>
 
 class Menu {
@@ -15,8 +16,11 @@ class Menu {
 };
 
 class MainMenu : public Menu {
+    private:
+        FontManager::Font* font;
 	public:
-        MainMenu() = default;
+        MainMenu();
+        ~MainMenu();
 
         std::unique_ptr<Menu> input(SDLKey sym);
 		std::unique_ptr<Menu> update(Uint32 delta_time);
