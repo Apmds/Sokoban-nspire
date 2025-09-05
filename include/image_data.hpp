@@ -16,4 +16,12 @@ extern unsigned short image_title[];
 
 extern unsigned short image_font[];
 
+extern unsigned short image_button[];
+
+extern unsigned short image_button_selected[];
+
+extern unsigned short image_button_long[];
+
+extern unsigned short image_button_long_selected[];
+
 #endif
