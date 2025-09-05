@@ -34,6 +34,8 @@ void MainMenu::draw(SDL_Surface* screen) {
 
     SDL_Surface* wall_tex = ImageManager::getTexture(image_wall);
     SDL_Surface* ground_tex = ImageManager::getTexture(image_ground);
+    SDL_Surface* player_tex = ImageManager::getTexture(image_player);
+    SDL_Surface* box_tex = ImageManager::getTexture(image_box);
 
     // Side walls
     for (int i = 0; i < 15; i++) {
@@ -59,7 +61,28 @@ void MainMenu::draw(SDL_Surface* screen) {
     // Title
     ImageManager::drawTexture(ImageManager::getTexture(image_title), screen, 90, 54);
 
-    FontManager::drawText(screen, this->font, 30, 30, "Play");
+    // Play button
+    ImageManager::drawTexture(ImageManager::getTexture(image_button_long_selected), screen, 128, 124);
+    FontManager::drawText(screen, this->font, 144, 132, "Play");
+
+    // Playground
+    for (int i = 7; i < 13; i++) {
+        ImageManager::drawTile(wall_tex, screen, i*TILE_WIDTH, 10*TILE_HEIGHT);
+        ImageManager::drawTile(wall_tex, screen, i*TILE_WIDTH, 13*TILE_HEIGHT);
+    }
+    for (int i = 11; i < 13; i++) {
+        ImageManager::drawTile(wall_tex, screen, 7*TILE_WIDTH, i*TILE_HEIGHT);
+        ImageManager::drawTile(wall_tex, screen, 12*TILE_WIDTH, i*TILE_HEIGHT);
+    }
+    for (int i = 8; i < 12; i++) {
+        ImageManager::drawTile(ground_tex, screen, i*TILE_WIDTH, 11*TILE_HEIGHT);
+        ImageManager::drawTile(ground_tex, screen, i*TILE_WIDTH, 12*TILE_HEIGHT);
+    }
+
+    // Playground actors
+    ImageManager::drawTile(player_tex, screen, 8*TILE_WIDTH, 12*TILE_HEIGHT, DIR_RIGHT);
+    ImageManager::drawTile(box_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+
     
     SDL_Flip(screen);
 }
