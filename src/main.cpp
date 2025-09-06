@@ -44,15 +44,14 @@ int main() {
 		if (has_event) {
 			switch (event.type) {
 			case SDL_KEYDOWN: {
-				if (event.key.keysym.sym == SDLK_ESCAPE) {
-					should_close = SDL_TRUE;
-				}
-
 				// Handle input and possible switching
 				std::unique_ptr<Menu> new_menu = menu->input(event.key.keysym.sym);
 				if (new_menu != nullptr) {
 					menu = std::move(new_menu);
 				}
+				
+				should_close = menu->shouldClose();
+				
 				break;
 			}
 			default:

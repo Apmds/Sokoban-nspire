@@ -10,6 +10,7 @@
 
 MainMenu::MainMenu() {
     this->font = FontManager::loadFont(image_font, 7, 9, 225, 114, 91);
+    this->close = SDL_FALSE;
 }
 
 MainMenu::~MainMenu() {
@@ -17,8 +18,14 @@ MainMenu::~MainMenu() {
 }
 
 std::unique_ptr<Menu> MainMenu::input(SDLKey sym) {
-    if (sym == SDLK_RETURN) {
+    switch (sym) {
+    case SDLK_RETURN:
         return std::make_unique<LevelSelectMenu>();
+    case SDLK_ESCAPE:
+        this->close = SDL_TRUE;
+        break;
+    default:
+        break;
     }
 
     return nullptr;
@@ -88,6 +95,10 @@ void MainMenu::draw(SDL_Surface* screen) {
     SDL_Flip(screen);
 }
 
+SDL_bool MainMenu::shouldClose() {
+    return this->close;
+}
+
 LevelSelectMenu::LevelSelectMenu() {
     this->font = FontManager::loadFont(image_font, 7, 9, 225, 114, 91);
     this->selectionIdx = 0;
@@ -138,7 +149,9 @@ std::unique_ptr<Menu> LevelSelectMenu::input(SDLKey sym) {
             this->invalidSelectionTime = 1000;
         }
         break;
-        
+
+    case SDLK_ESCAPE:
+        return std::make_unique<MainMenu>();
     default:
         break;
     }
@@ -179,6 +192,10 @@ void LevelSelectMenu::draw(SDL_Surface* screen) {
     }
 
     SDL_Flip(screen);
+}
+
+SDL_bool LevelSelectMenu::shouldClose() {
+    return SDL_FALSE;
 }
 
 // Gay function bc Level does not have a default constructor
@@ -226,6 +243,8 @@ std::unique_ptr<Menu> LevelMenu::input(SDLKey sym) {
 	case SDLK_6:
 		level.movePlayerRight();
 		break;
+    case SDLK_ESCAPE:
+        return std::make_unique<LevelSelectMenu>();
 
 	default:
 		break;
@@ -260,4 +279,8 @@ void LevelMenu::draw(SDL_Surface* screen) {
     }
     
     SDL_Flip(screen);
+}
+
+SDL_bool LevelMenu::shouldClose() {
+    return SDL_FALSE;
 }

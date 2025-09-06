@@ -8,9 +8,17 @@
 
 class Menu {
 	public:
+        // Runs when an input event is caught
 		virtual std::unique_ptr<Menu> input(SDLKey sym) = 0;
-		virtual std::unique_ptr<Menu> update(Uint32 delta_time) = 0;
-		virtual void draw(SDL_Surface* screen) = 0;
+		
+        // Runs every frame. delta time is the ms since last frame
+        virtual std::unique_ptr<Menu> update(Uint32 delta_time) = 0;
+		
+        // Draws the menu to the screen
+        virtual void draw(SDL_Surface* screen) = 0;
+
+        // Whether or not the menu wants the game to close
+        virtual SDL_bool shouldClose() = 0;
 
         virtual ~Menu() = default;
 };
@@ -18,6 +26,7 @@ class Menu {
 class MainMenu : public Menu {
     private:
         FontManager::Font* font;
+        SDL_bool close;
 	public:
         MainMenu();
         ~MainMenu();
@@ -25,6 +34,7 @@ class MainMenu : public Menu {
         std::unique_ptr<Menu> input(SDLKey sym);
 		std::unique_ptr<Menu> update(Uint32 delta_time);
 		void draw(SDL_Surface* screen);
+        SDL_bool shouldClose();
 };
 
 class LevelSelectMenu : public Menu {
@@ -39,6 +49,7 @@ class LevelSelectMenu : public Menu {
         std::unique_ptr<Menu> input(SDLKey sym);
         std::unique_ptr<Menu> update(Uint32 delta_time);
 		void draw(SDL_Surface* screen);
+        SDL_bool shouldClose();
 };
 
 class LevelMenu : public Menu {
@@ -53,6 +64,7 @@ class LevelMenu : public Menu {
         std::unique_ptr<Menu> input(SDLKey sym);
 		std::unique_ptr<Menu> update(Uint32 delta_time);
 		void draw(SDL_Surface* screen);
+        SDL_bool shouldClose();
 };
 
 #endif
