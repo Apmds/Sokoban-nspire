@@ -30,6 +30,7 @@ class MainMenu : public Menu {
 class LevelSelectMenu : public Menu {
     private:
         int selectionIdx;
+        Uint32 invalidSelectionTime;
         FontManager::Font* font;
 	public:
         LevelSelectMenu();

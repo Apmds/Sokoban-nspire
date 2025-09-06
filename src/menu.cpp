@@ -91,6 +91,7 @@ void MainMenu::draw(SDL_Surface* screen) {
 LevelSelectMenu::LevelSelectMenu() {
     this->font = FontManager::loadFont(image_font, 7, 9, 225, 114, 91);
     this->selectionIdx = 0;
+    this->invalidSelectionTime = 0;
 }
 
 LevelSelectMenu::~LevelSelectMenu() {
@@ -130,7 +131,13 @@ std::unique_ptr<Menu> LevelSelectMenu::input(SDLKey sym) {
         break;
 
     case SDLK_RETURN:
-        return std::make_unique<LevelMenu>(this->selectionIdx + 1);
+        // Check for invalid level
+        try {
+            return std::make_unique<LevelMenu>(this->selectionIdx + 1);
+        } catch(const std::invalid_argument& e) {
+            this->invalidSelectionTime = 1000;
+        }
+        break;
         
     default:
         break;
@@ -140,7 +147,12 @@ std::unique_ptr<Menu> LevelSelectMenu::input(SDLKey sym) {
 }
 
 std::unique_ptr<Menu> LevelSelectMenu::update(Uint32 delta_time) {
-    (void)delta_time;   // Hides Wunused-parameter
+    if (delta_time > this->invalidSelectionTime) {
+        this->invalidSelectionTime = 0;
+    } else {
+        this->invalidSelectionTime -= delta_time;
+    }
+
     return nullptr;
 }
 
@@ -158,6 +170,12 @@ void LevelSelectMenu::draw(SDL_Surface* screen) {
 
         ImageManager::drawTexture(tex, screen, posX, posY);
         FontManager::drawText(screen, this->font, (posX + tex->w/2) - int(3* (i+1 > 9 ? 2.5 : 1)), (posY + tex->h/2) - 4, "%d", i+1);
+    }
+
+    // Text above
+    FontManager::drawText(screen, this->font, 105, 15, "Select a level");
+    if (this->invalidSelectionTime > 0) {
+        FontManager::drawText(screen, this->font, 45, 31, "That level does not exist yet");
     }
 
     SDL_Flip(screen);
