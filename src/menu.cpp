@@ -5,10 +5,11 @@
 #include <stdexcept>
 
 #define LEVEL_COMPLETE_DELAY 1000 // milliseconds needed to wait after completing a level
+#define LEVEL_SELECT_ROW_SIZE 9
+#define LEVEL_NUMS 45
 
 MainMenu::MainMenu() {
     this->font = FontManager::loadFont(image_font, 7, 9, 225, 114, 91);
-    
 }
 
 MainMenu::~MainMenu() {
@@ -16,7 +17,6 @@ MainMenu::~MainMenu() {
 }
 
 std::unique_ptr<Menu> MainMenu::input(SDLKey sym) {
-    // TODO: update properly with input
     if (sym == SDLK_RETURN) {
         return std::make_unique<LevelSelectMenu>();
     }
@@ -25,6 +25,7 @@ std::unique_ptr<Menu> MainMenu::input(SDLKey sym) {
 }
 
 std::unique_ptr<Menu> MainMenu::update(Uint32 delta_time) {
+    (void)delta_time;   // Hides Wunused-parameter
     return nullptr;
 }
 
@@ -88,25 +89,77 @@ void MainMenu::draw(SDL_Surface* screen) {
 }
 
 LevelSelectMenu::LevelSelectMenu() {
+    this->font = FontManager::loadFont(image_font, 7, 9, 225, 114, 91);
     this->selectionIdx = 0;
 }
 
+LevelSelectMenu::~LevelSelectMenu() {
+    FontManager::unloadFont(this->font);
+}
+
 std::unique_ptr<Menu> LevelSelectMenu::input(SDLKey sym) {
-    // TODO: update properly with input
+    switch (sym) {
+    case SDLK_UP:
+    case SDLK_8:
+        this->selectionIdx = (this->selectionIdx - LEVEL_SELECT_ROW_SIZE);
+        while (this->selectionIdx < 0) {
+            this->selectionIdx += LEVEL_NUMS;
+        }
+        break;
+    case SDLK_DOWN:
+    case SDLK_2:
+        this->selectionIdx = (this->selectionIdx + LEVEL_SELECT_ROW_SIZE) % LEVEL_NUMS;
+        break;
+
+    case SDLK_LEFT:
+    case SDLK_4:
+        if (this->selectionIdx % LEVEL_SELECT_ROW_SIZE == 0) {
+            this->selectionIdx += LEVEL_SELECT_ROW_SIZE-1;
+        } else {
+            this->selectionIdx -= 1;
+        }
+        break;
+
+    case SDLK_RIGHT:
+    case SDLK_6:
+        if (this->selectionIdx % LEVEL_SELECT_ROW_SIZE == LEVEL_SELECT_ROW_SIZE-1) {
+            this->selectionIdx -= LEVEL_SELECT_ROW_SIZE-1;
+        } else {
+            this->selectionIdx += 1;
+        }
+        break;
+
+    case SDLK_RETURN:
+        return std::make_unique<LevelMenu>(this->selectionIdx + 1);
+        
+    default:
+        break;
+    }
+
     return nullptr;
 }
 
 std::unique_ptr<Menu> LevelSelectMenu::update(Uint32 delta_time) {
-    // TODO: update
-    return std::make_unique<LevelMenu>(this->selectionIdx + 1);
+    (void)delta_time;   // Hides Wunused-parameter
+    return nullptr;
 }
 
 void LevelSelectMenu::draw(SDL_Surface* screen) {
-    // TODO: draw the level selection
-    
     // Clear screen
     SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 28, 43, 58));
     
+    // Level buttons
+    SDL_Surface* button_tex = ImageManager::getTexture(image_button);
+    SDL_Surface* button_selected_tex = ImageManager::getTexture(image_button_selected);
+    for (int i = 0; i < LEVEL_NUMS; i++) {
+        SDL_Surface* tex = i == this->selectionIdx ? button_selected_tex : button_tex;
+        int posX = 36 + (i%LEVEL_SELECT_ROW_SIZE)*(tex->w+4);
+        int posY = 48 + (i/LEVEL_SELECT_ROW_SIZE)*(tex->h+6);
+
+        ImageManager::drawTexture(tex, screen, posX, posY);
+        FontManager::drawText(screen, this->font, (posX + tex->w/2) - int(3* (i+1 > 9 ? 2.5 : 1)), (posY + tex->h/2) - 4, "%d", i+1);
+    }
+
     SDL_Flip(screen);
 }
 

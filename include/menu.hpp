@@ -30,8 +30,10 @@ class MainMenu : public Menu {
 class LevelSelectMenu : public Menu {
     private:
         int selectionIdx;
+        FontManager::Font* font;
 	public:
         LevelSelectMenu();
+        ~LevelSelectMenu();
 
         std::unique_ptr<Menu> input(SDLKey sym);
         std::unique_ptr<Menu> update(Uint32 delta_time);
