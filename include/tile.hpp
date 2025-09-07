@@ -5,11 +5,8 @@
 
 
 enum TileType {
-    PLAYER = 0,
-    BOX,
     GROUND,
     WALL,
-    STORAGE,
 };
 
 enum PlayerDirection {
@@ -71,6 +68,9 @@ public:
     void moveRight(bool change_direction);
     void moveUp(bool change_direction);
     void moveDown(bool change_direction);
+
+    void setDirection(PlayerDirection val);
+    PlayerDirection getDirection();
 };
 
 class Box : public MovableTile {

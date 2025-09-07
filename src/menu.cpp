@@ -243,9 +243,14 @@ std::unique_ptr<Menu> LevelMenu::input(SDLKey sym) {
 	case SDLK_6:
 		level.movePlayerRight();
 		break;
+    
+    case SDLK_1: // TODO: change to a better key
+        this->level.rewind();
+        break;
+    
     case SDLK_ESCAPE:
         return std::make_unique<LevelSelectMenu>();
-
+        
 	default:
 		break;
 	}
@@ -273,6 +278,7 @@ void LevelMenu::draw(SDL_Surface* screen) {
 
     // UI
     //int framerate = delta_time == 0 ? 0 : int(1.0f/(float(delta_time)*0.001));
+    nSDL_DrawString(screen, this->font, 10, 10, "Steps: %d", this->level.getSteps());
 
     if (this->level.isCompleted()) {
         nSDL_DrawString(screen, this->font, 60, 120, "\x1 \x1 Yay, the level is completed! \x1 \x1");

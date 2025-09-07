@@ -112,6 +112,14 @@ void Player::moveDown(bool change_direction) {
 	MovableTile::moveDown();
 }
 
+void Player::setDirection(PlayerDirection val) {
+	this->direction = val;
+}
+
+PlayerDirection Player::getDirection() {
+	return this->direction;
+}
+
 
 Box::Box(vec2 gridPos) : MovableTile(gridPos, ImageManager::getTexture(image_box)) {
 	this->placed = false;
