@@ -335,6 +335,12 @@ static Level loadLevel(int level_num) {
 	    	return Level(level1size.x, level1size.y, level1map, level1playerPos, level1boxes, level1storages);
 	    case 2:
 	    	return Level(level2size.x, level2size.y, level2map, level2playerPos, level2boxes, level2storages);
+        case 3:
+	    	return Level(level3size.x, level3size.y, level3map, level3playerPos, level3boxes, level3storages);
+        case 4:
+	    	return Level(level4size.x, level4size.y, level4map, level4playerPos, level4boxes, level4storages);
+        case 5:
+	    	return Level(level5size.x, level5size.y, level5map, level5playerPos, level5boxes, level5storages);
 	    default:
 	    	throw std::invalid_argument("Unknown level number.");
 	}
