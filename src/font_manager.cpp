@@ -188,7 +188,7 @@ void FontManager::drawTextCentered(SDL_Surface* screen, FontManager::Font* font,
     // Draw the formatted buffer to the screen
     int i = 0;
     while (buffer[i] != '\0') {
-        drawChar(screen, font, buffer[i], x + (i*(font->char_w+font->spacing)) - (((font->char_w+font->spacing)*needed)/2), y - (font->char_h/2));
+        drawChar(screen, font, buffer[i], x + (i*(font->char_w+font->spacing)) - (((font->char_w)*needed) + ((font->spacing-1)*needed))/2, y - (font->char_h/2));
 
         i++;
     }
