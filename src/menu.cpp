@@ -7,10 +7,12 @@
 #define LEVEL_COMPLETE_DELAY 1000 // milliseconds needed to wait after completing a level
 #define LEVEL_SELECT_ROW_SIZE 9
 #define LEVEL_NUMS 45
+#define MAIN_MENU_ANIMATION_TIME 300 // milliseconds that a frame of the main menu animation lasts
 
 MainMenu::MainMenu() {
     this->font = FontManager::loadFont(image_font, 7, 9, 225, 114, 91);
     this->close = SDL_FALSE;
+    this->animationTimer = 0;
 }
 
 MainMenu::~MainMenu() {
@@ -32,7 +34,10 @@ std::unique_ptr<Menu> MainMenu::input(SDLKey sym) {
 }
 
 std::unique_ptr<Menu> MainMenu::update(Uint32 delta_time) {
-    (void)delta_time;   // Hides Wunused-parameter
+    animationTimer += delta_time;
+    if (animationTimer > 30*MAIN_MENU_ANIMATION_TIME) {
+        animationTimer = 0;
+    }
     return nullptr;
 }
 
@@ -88,8 +93,133 @@ void MainMenu::draw(SDL_Surface* screen) {
     }
 
     // Playground actors
-    ImageManager::drawTile(player_tex, screen, 8*TILE_WIDTH, 12*TILE_HEIGHT, DIR_RIGHT);
-    ImageManager::drawTile(box_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+    switch (animationTimer / MAIN_MENU_ANIMATION_TIME) {
+    case 0:
+        ImageManager::drawTile(player_tex, screen, 8*TILE_WIDTH, 12*TILE_HEIGHT, DIR_RIGHT);
+        ImageManager::drawTile(box_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 1:
+        ImageManager::drawTile(player_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, DIR_RIGHT);
+        ImageManager::drawTile(box_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 2:
+        ImageManager::drawTile(player_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, DIR_DOWN);
+        ImageManager::drawTile(box_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 3:
+        ImageManager::drawTile(player_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, DIR_LEFT);
+        ImageManager::drawTile(box_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 4:
+        ImageManager::drawTile(player_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, DIR_UP);
+        ImageManager::drawTile(box_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 5:
+        ImageManager::drawTile(player_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, DIR_RIGHT);
+        ImageManager::drawTile(box_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 6:
+        ImageManager::drawTile(player_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, DIR_DOWN);
+        ImageManager::drawTile(box_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 7:
+        ImageManager::drawTile(player_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, DIR_LEFT);
+        ImageManager::drawTile(box_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 8:
+        ImageManager::drawTile(player_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, DIR_UP);
+        ImageManager::drawTile(box_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 9:
+        ImageManager::drawTile(player_tex, screen, 9*TILE_WIDTH, 11*TILE_HEIGHT, DIR_UP);
+        ImageManager::drawTile(box_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 10:
+        ImageManager::drawTile(player_tex, screen, 9*TILE_WIDTH, 11*TILE_HEIGHT, DIR_RIGHT);
+        ImageManager::drawTile(box_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 11:
+        ImageManager::drawTile(player_tex, screen, 10*TILE_WIDTH, 11*TILE_HEIGHT, DIR_RIGHT);
+        ImageManager::drawTile(box_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 12:
+        ImageManager::drawTile(player_tex, screen, 11*TILE_WIDTH, 11*TILE_HEIGHT, DIR_RIGHT);
+        ImageManager::drawTile(box_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 13:
+        ImageManager::drawTile(player_tex, screen, 11*TILE_WIDTH, 11*TILE_HEIGHT, DIR_DOWN);
+        ImageManager::drawTile(box_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 14:
+        ImageManager::drawTile(player_tex, screen, 11*TILE_WIDTH, 12*TILE_HEIGHT, DIR_DOWN);
+        ImageManager::drawTile(box_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 15:
+        ImageManager::drawTile(player_tex, screen, 11*TILE_WIDTH, 12*TILE_HEIGHT, DIR_LEFT);
+        ImageManager::drawTile(box_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 16:
+        ImageManager::drawTile(player_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, DIR_LEFT);
+        ImageManager::drawTile(box_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 17:
+        ImageManager::drawTile(player_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, DIR_DOWN);
+        ImageManager::drawTile(box_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 18:
+        ImageManager::drawTile(player_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, DIR_RIGHT);
+        ImageManager::drawTile(box_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 19:
+        ImageManager::drawTile(player_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, DIR_UP);
+        ImageManager::drawTile(box_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 20:
+        ImageManager::drawTile(player_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, DIR_LEFT);
+        ImageManager::drawTile(box_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+
+    case 21:
+        ImageManager::drawTile(player_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, DIR_DOWN);
+        ImageManager::drawTile(box_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 22:
+        ImageManager::drawTile(player_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, DIR_RIGHT);
+        ImageManager::drawTile(box_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 23:
+        ImageManager::drawTile(player_tex, screen, 10*TILE_WIDTH, 12*TILE_HEIGHT, DIR_UP);
+        ImageManager::drawTile(box_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 24:
+        ImageManager::drawTile(player_tex, screen, 10*TILE_WIDTH, 11*TILE_HEIGHT, DIR_UP);
+        ImageManager::drawTile(box_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 25:
+        ImageManager::drawTile(player_tex, screen, 10*TILE_WIDTH, 11*TILE_HEIGHT, DIR_LEFT);
+        ImageManager::drawTile(box_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 26:
+        ImageManager::drawTile(player_tex, screen, 9*TILE_WIDTH, 11*TILE_HEIGHT, DIR_LEFT);
+        ImageManager::drawTile(box_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 27:
+        ImageManager::drawTile(player_tex, screen, 8*TILE_WIDTH, 11*TILE_HEIGHT, DIR_LEFT);
+        ImageManager::drawTile(box_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 28:
+        ImageManager::drawTile(player_tex, screen, 8*TILE_WIDTH, 11*TILE_HEIGHT, DIR_DOWN);
+        ImageManager::drawTile(box_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+    case 29:
+        ImageManager::drawTile(player_tex, screen, 8*TILE_WIDTH, 12*TILE_HEIGHT, DIR_DOWN);
+        ImageManager::drawTile(box_tex, screen, 9*TILE_WIDTH, 12*TILE_HEIGHT, 0);
+        break;
+
+    default:
+        break;
+    }
+    
 
     
     SDL_Flip(screen);
@@ -182,7 +312,7 @@ void LevelSelectMenu::draw(SDL_Surface* screen) {
         int posY = 48 + (i/LEVEL_SELECT_ROW_SIZE)*(tex->h+6);
 
         ImageManager::drawTexture(tex, screen, posX, posY);
-        FontManager::drawText(screen, this->font, (posX + tex->w/2) - int(3* (i+1 > 9 ? 2.5 : 1)), (posY + tex->h/2) - 4, "%d", i+1);
+        FontManager::drawTextCentered(screen, this->font, (posX + tex->w/2), (posY + tex->h/2), "%d", i+1);
     }
 
     // Text above
@@ -212,11 +342,11 @@ static Level loadLevel(int level_num) {
 
 LevelMenu::LevelMenu(int level_num) : level(loadLevel(level_num)) {
     this->complete_delay = LEVEL_COMPLETE_DELAY;
-	this->font = nSDL_LoadFont(NSDL_FONT_FANTASY, 255, 255, 255);
+    this->font = FontManager::loadFont(image_font, 7, 9, 225, 114, 91);
 }
 
 LevelMenu::~LevelMenu() {
-    nSDL_FreeFont(this->font);
+    FontManager::unloadFont(this->font);
 }
 
 std::unique_ptr<Menu> LevelMenu::input(SDLKey sym) {
@@ -224,6 +354,7 @@ std::unique_ptr<Menu> LevelMenu::input(SDLKey sym) {
         return nullptr;
     }
 
+    printf("%d\n", sym);
     switch (sym) {
 	case SDLK_UP:
 	case SDLK_8:
@@ -244,7 +375,7 @@ std::unique_ptr<Menu> LevelMenu::input(SDLKey sym) {
 		level.movePlayerRight();
 		break;
     
-    case SDLK_1: // TODO: change to a better key
+    case SDLK_0:
         this->level.rewind();
         break;
     
@@ -278,10 +409,10 @@ void LevelMenu::draw(SDL_Surface* screen) {
 
     // UI
     //int framerate = delta_time == 0 ? 0 : int(1.0f/(float(delta_time)*0.001));
-    nSDL_DrawString(screen, this->font, 10, 10, "Steps: %d", this->level.getSteps());
+    FontManager::drawText(screen, this->font, 10, 10, "Steps: %d", this->level.getSteps());
 
     if (this->level.isCompleted()) {
-        nSDL_DrawString(screen, this->font, 60, 120, "\x1 \x1 Yay, the level is completed! \x1 \x1");
+        FontManager::drawTextCentered(screen, this->font, 160, 120, "\x1 \x1 Yay, the level is completed! \x1 \x1");
     }
     
     SDL_Flip(screen);

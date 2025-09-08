@@ -27,6 +27,7 @@ class MainMenu : public Menu {
     private:
         FontManager::Font* font;
         SDL_bool close;
+        Uint32 animationTimer;
 	public:
         MainMenu();
         ~MainMenu();
@@ -56,7 +57,7 @@ class LevelMenu : public Menu {
     private:
         Level level;
         Uint32 complete_delay; // Time(ms) to transition off this screen after completition
-        nSDL_Font* font;
+        FontManager::Font* font;
 	public:
         LevelMenu(int level_num);
         ~LevelMenu();

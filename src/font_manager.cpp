@@ -9,6 +9,7 @@ struct FontManager::font {
     SDL_Surface* data;
     int char_w;
     int char_h;
+    int spacing;
 };
 
 FontManager::Font* FontManager::loadFont(Uint16* font_data, int char_width, int char_height, int tint_r, int tint_g, int tint_b) {
@@ -26,6 +27,7 @@ FontManager::Font* FontManager::loadFont(Uint16* font_data, int char_width, int 
     font->data = font_tex;
     font->char_w = char_width;
     font->char_h = char_height;
+    font->spacing = 1;
 
     // Validate character sizes
     if (font->data->h < char_height) {
@@ -161,6 +163,49 @@ void FontManager::drawText(SDL_Surface* screen, FontManager::Font* font, int x, 
     }
 
     free(buffer);
+}
+
+void FontManager::drawTextCentered(SDL_Surface* screen, FontManager::Font* font, int x, int y, const char* format, ...) {
+    va_list args;
+    va_start(args, format);
+    
+    // Get required buffer size
+    va_list args_copy;
+    va_copy(args_copy, args);
+    int needed = vsnprintf(NULL, 0, format, args_copy);
+    va_end(args_copy);
+
+    // Get formatted string
+    char* buffer = (char*) malloc(needed + 1);
+    if (buffer == NULL) {
+        exit(EXIT_FAILURE);
+    }
+
+    vsnprintf(buffer, needed + 1, format, args);
+
+    va_end(args);
+
+    // Draw the formatted buffer to the screen
+    int i = 0;
+    while (buffer[i] != '\0') {
+        drawChar(screen, font, buffer[i], x + (i*(font->char_w+font->spacing)) - (((font->char_w+font->spacing)*needed)/2), y - (font->char_h/2));
+
+        i++;
+    }
+
+    free(buffer);
+}
+
+int FontManager::measureText(FontManager::Font* font, const char* format, ...) {
+    va_list args;
+    va_start(args, format);
+    
+    // Get required buffer size
+    int needed = vsnprintf(NULL, 0, format, args);
+
+    va_end(args);
+
+    return (font->char_w+font->spacing) * needed;
 }
 
 void FontManager::unloadFont(FontManager::Font* font) {
