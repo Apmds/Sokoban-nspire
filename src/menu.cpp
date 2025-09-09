@@ -5,8 +5,8 @@
 #include <stdexcept>
 
 #define LEVEL_COMPLETE_DELAY 1000 // milliseconds needed to wait after completing a level
-#define LEVEL_SELECT_ROW_SIZE 9
-#define LEVEL_NUMS 45
+#define LEVEL_SELECT_ROW_SIZE 6
+#define LEVEL_NUMS 24
 #define MAIN_MENU_ANIMATION_TIME 300 // milliseconds that a frame of the main menu animation lasts
 
 MainMenu::MainMenu() {
@@ -229,9 +229,11 @@ SDL_bool MainMenu::shouldClose() {
     return this->close;
 }
 
-LevelSelectMenu::LevelSelectMenu() {
+LevelSelectMenu::LevelSelectMenu() : LevelSelectMenu(0) {}
+
+LevelSelectMenu::LevelSelectMenu(int selectionIdx) {
     this->font = FontManager::loadFont(image_font, 7, 9, 225, 114, 91);
-    this->selectionIdx = 0;
+    this->selectionIdx = selectionIdx;
     this->invalidSelectionTime = 0;
 }
 
@@ -308,8 +310,8 @@ void LevelSelectMenu::draw(SDL_Surface* screen) {
     SDL_Surface* button_selected_tex = ImageManager::getTexture(image_button_selected);
     for (int i = 0; i < LEVEL_NUMS; i++) {
         SDL_Surface* tex = i == this->selectionIdx ? button_selected_tex : button_tex;
-        int posX = 36 + (i%LEVEL_SELECT_ROW_SIZE)*(tex->w+4);
-        int posY = 48 + (i/LEVEL_SELECT_ROW_SIZE)*(tex->h+6);
+        int posX = 43 + (i%LEVEL_SELECT_ROW_SIZE)*(tex->w+18);
+        int posY = 64 + (i/LEVEL_SELECT_ROW_SIZE)*(tex->h+18);
 
         ImageManager::drawTexture(tex, screen, posX, posY);
         FontManager::drawTextCentered(screen, this->font, (posX + tex->w/2), (posY + tex->h/2), "%d", i+1);
@@ -341,12 +343,19 @@ static Level loadLevel(int level_num) {
 	    	return Level(level4size.x, level4size.y, level4map, level4playerPos, level4boxes, level4storages);
         case 5:
 	    	return Level(level5size.x, level5size.y, level5map, level5playerPos, level5boxes, level5storages);
+        case 6:
+	    	return Level(level6size.x, level6size.y, level6map, level6playerPos, level6boxes, level6storages);
+        case 7:
+	    	return Level(level7size.x, level7size.y, level7map, level7playerPos, level7boxes, level7storages);
+        case 8:
+	    	return Level(level8size.x, level8size.y, level8map, level8playerPos, level8boxes, level8storages);
 	    default:
 	    	throw std::invalid_argument("Unknown level number.");
 	}
 }
 
 LevelMenu::LevelMenu(int level_num) : level(loadLevel(level_num)) {
+    this->level_num = level_num;
     this->complete_delay = LEVEL_COMPLETE_DELAY;
     this->font = FontManager::loadFont(image_font, 7, 9, 225, 114, 91);
 }
@@ -386,7 +395,7 @@ std::unique_ptr<Menu> LevelMenu::input(SDLKey sym) {
         break;
     
     case SDLK_ESCAPE:
-        return std::make_unique<LevelSelectMenu>();
+        return std::make_unique<LevelSelectMenu>(this->level_num-1);
         
 	default:
 		break;

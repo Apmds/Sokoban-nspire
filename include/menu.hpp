@@ -45,6 +45,7 @@ class LevelSelectMenu : public Menu {
         FontManager::Font* font;
 	public:
         LevelSelectMenu();
+        LevelSelectMenu(int selectionIdx);
         ~LevelSelectMenu();
 
         std::unique_ptr<Menu> input(SDLKey sym);
@@ -55,6 +56,7 @@ class LevelSelectMenu : public Menu {
 
 class LevelMenu : public Menu {
     private:
+        int level_num;
         Level level;
         Uint32 complete_delay; // Time(ms) to transition off this screen after completition
         FontManager::Font* font;

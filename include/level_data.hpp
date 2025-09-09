@@ -214,4 +214,176 @@ static std::vector<vec2> level5storages = {
 };
 static vec2 level5playerPos = {9, 1};
 
+
+static vec2 level6size = {13, 12};
+static TileType level6map[] = {
+    GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, WALL  , WALL  , WALL  , WALL  , WALL  , GROUND,
+    GROUND, WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , GROUND, GROUND, GROUND, WALL  , WALL  ,
+    WALL  , WALL  , GROUND, WALL  , GROUND, GROUND, WALL  , WALL  , GROUND, GROUND, GROUND, GROUND, WALL  ,
+    WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, WALL  ,
+    WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, WALL  , WALL  , WALL  , GROUND, GROUND, GROUND, WALL  ,
+    WALL  , WALL  , WALL  , GROUND, WALL  , WALL  , WALL  , WALL  , WALL  , GROUND, WALL  , WALL  , WALL  ,
+    WALL  , GROUND, GROUND, GROUND, GROUND, WALL  , WALL  , WALL  , GROUND, GROUND, GROUND, WALL  , GROUND,
+    WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, WALL  , GROUND,
+    WALL  , GROUND, GROUND, GROUND, GROUND, WALL  , WALL  , WALL  , GROUND, GROUND, GROUND, WALL  , GROUND,
+    WALL  , GROUND, GROUND, GROUND, GROUND, WALL  , GROUND, WALL  , GROUND, GROUND, GROUND, WALL  , GROUND,
+    WALL  , GROUND, GROUND, WALL  , WALL  , WALL  , GROUND, WALL  , WALL  , WALL  , WALL  , WALL  , GROUND,
+    WALL  , WALL  , WALL  , WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND,
+};
+static std::vector<vec2> level6boxes = {
+    {5, 3},
+    {3, 4},
+    {2, 6},
+    {2, 7},
+    {4, 7},
+    {6, 7},
+    {2, 9},
+    {3, 9},
+    {9, 5},
+    {9, 2},
+    {10, 2},
+};
+static std::vector<vec2> level6storages = {
+    {9, 6},
+    {10, 6},
+
+    {8, 7},
+    {9, 7},
+    {10, 7},
+
+    {8, 8},
+    {9, 8},
+    {10, 8},
+
+    {8, 9},
+    {9, 9},
+    {10, 9},
+};
+static vec2 level6playerPos = {5, 2};
+
+
+static vec2 level7size = {20, 13};
+static TileType level7map[] = {
+    GROUND, GROUND, GROUND, GROUND, WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND,
+    GROUND, GROUND, WALL  , WALL  , WALL  , GROUND, GROUND, GROUND, WALL  , WALL  , GROUND, GROUND, WALL  , WALL  , WALL  , WALL  , WALL  , GROUND, GROUND, GROUND,
+    WALL  , WALL  , WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, WALL  , GROUND, GROUND, WALL  , GROUND, GROUND, GROUND, WALL  , WALL  , WALL  , WALL  ,
+    WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, WALL  , GROUND, GROUND, WALL  , GROUND, GROUND, WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, WALL  ,
+    WALL  , GROUND, WALL  , GROUND, GROUND, GROUND, WALL  , GROUND, GROUND, WALL  , WALL  , GROUND, WALL  , GROUND, WALL  , GROUND, WALL  , GROUND, GROUND, WALL  ,
+    WALL  , GROUND, GROUND, WALL  , WALL  , GROUND, WALL  , GROUND, GROUND, GROUND, WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, WALL  ,
+    WALL  , GROUND, GROUND, WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, WALL  , GROUND, WALL  , GROUND, WALL  , GROUND, WALL  , GROUND, GROUND, WALL  ,
+    WALL  , GROUND, GROUND, GROUND, GROUND, WALL  , WALL  , GROUND, GROUND, WALL  , WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, WALL  ,
+    WALL  , GROUND, GROUND, GROUND, WALL  , WALL  , GROUND, GROUND, GROUND, WALL  , GROUND, GROUND, WALL  , GROUND, WALL  , GROUND, WALL  , GROUND, GROUND, WALL  ,
+    WALL  , WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, WALL  ,
+    GROUND, WALL  , GROUND, GROUND, GROUND, WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , GROUND, GROUND, GROUND, GROUND, WALL  , WALL  , GROUND, GROUND, WALL  ,
+    GROUND, WALL  , GROUND, GROUND, GROUND, WALL  , GROUND, GROUND, GROUND, GROUND, WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  ,
+    GROUND, WALL  , WALL  , WALL  , WALL  , WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND,
+};
+static std::vector<vec2> level7boxes = {
+    {3, 3},
+    {4, 3},
+    {5, 4},
+    {7, 3},
+    {8, 4},
+    {7, 5},
+    {8, 6},
+
+    {7, 9},
+    {4, 9},
+    {3, 9},
+    {2, 10},
+    {2, 8},
+    {2, 6},
+
+    {11, 9},
+    {11, 7},
+    {13, 7},
+    {13, 8},
+    {14, 9},
+};
+static std::vector<vec2> level7storages = {
+    {15, 9},
+    {16, 9},
+    {17, 9},
+
+    {15, 8},
+    {17, 8},
+
+    {15, 7},
+    {16, 7},
+    {17, 7},
+
+    {15, 6},
+    {17, 6},
+
+    {15, 5},
+    {16, 5},
+    {17, 5},
+
+    {15, 4},
+    {17, 4},
+
+    {15, 3},
+    {16, 3},
+    {17, 3},
+    
+};
+static vec2 level7playerPos = {7, 4};
+
+
+static vec2 level8size = {17, 13};
+static TileType level8map[] = {
+    WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , GROUND,
+    WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, WALL  , GROUND,
+    WALL  , GROUND, WALL  , GROUND, WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, WALL  , GROUND,
+    WALL  , GROUND, WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, WALL  , GROUND, GROUND, WALL  , GROUND,
+    WALL  , GROUND, WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, WALL  , WALL  , GROUND, WALL  , WALL  ,
+    WALL  , GROUND, WALL  , GROUND, WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, WALL  , WALL  , WALL  , GROUND, GROUND, GROUND, WALL  ,
+    WALL  , GROUND, WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, WALL  , WALL  , GROUND, GROUND, GROUND, WALL  ,
+    WALL  , GROUND, WALL  , WALL  , WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, WALL  , WALL  , GROUND, GROUND, GROUND, WALL  ,
+    WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, WALL  , GROUND, WALL  , WALL  , GROUND, WALL  , WALL  , GROUND, GROUND, GROUND, WALL  ,
+    WALL  , WALL  , WALL  , WALL  , WALL  , GROUND, GROUND, GROUND, WALL  , WALL  , GROUND, WALL  , WALL  , GROUND, GROUND, GROUND, WALL  ,
+    GROUND, GROUND, GROUND, GROUND, WALL  , WALL  , WALL  , WALL  , WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, WALL  , WALL  , WALL  ,
+    GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, WALL  , GROUND, GROUND, GROUND, GROUND, GROUND, WALL  , GROUND, GROUND,
+    GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, GROUND, WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , GROUND, GROUND,
+};
+static std::vector<vec2> level8boxes = {
+    {5, 3},
+    {7, 3},
+    {9, 3},
+    {11, 3},
+    {6, 4},
+    {8, 4},
+    {5, 5},
+    {7, 5},
+    {9, 5},
+    {6, 6},
+    {8, 6},
+    {5, 7},
+    {6, 7},
+    {7, 7},
+    {9, 7},
+};
+static std::vector<vec2> level8storages = {
+    {13, 5},
+    {14, 5},
+    {15, 5},
+
+    {13, 6},
+    {14, 6},
+    {15, 6},
+
+    {13, 7},
+    {14, 7},
+    {15, 7},
+
+    {13, 8},
+    {14, 8},
+    {15, 8},
+
+    {13, 9},
+    {14, 9},
+    {15, 9},
+};
+static vec2 level8playerPos = {7, 4};
+
 #endif
