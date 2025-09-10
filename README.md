@@ -6,7 +6,10 @@ The game currently features 12 levels, with 24 planned in the future.
 
 ## Screenshots
 
-
+![screenshot1](media/screenshot1.png)
+![screenshot2](media/screenshot2.png)
+![screenshot3](media/screenshot3.png)
+![screenshot4](media/screenshot4.png)
 
 ## Controls
 
