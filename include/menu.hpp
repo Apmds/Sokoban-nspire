@@ -59,7 +59,8 @@ class LevelMenu : public Menu {
         int level_num;
         Level level;
         Uint32 complete_delay; // Time(ms) to transition off this screen after completition
-        FontManager::Font* font;
+        FontManager::Font* ui_font;
+        FontManager::Font* completed_font;
 	public:
         LevelMenu(int level_num);
         ~LevelMenu();

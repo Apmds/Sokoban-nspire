@@ -365,11 +365,13 @@ static Level loadLevel(int level_num) {
 LevelMenu::LevelMenu(int level_num) : level(loadLevel(level_num)) {
     this->level_num = level_num;
     this->complete_delay = LEVEL_COMPLETE_DELAY;
-    this->font = FontManager::loadFont(image_font, 7, 9, 225, 114, 91);
+    this->ui_font = FontManager::loadFont(image_font, 7, 9, 225, 114, 91);
+    this->completed_font = FontManager::loadFont(image_font, 7, 9, 66, 245, 105);
 }
 
 LevelMenu::~LevelMenu() {
-    FontManager::unloadFont(this->font);
+    FontManager::unloadFont(this->ui_font);
+    FontManager::unloadFont(this->completed_font);
 }
 
 std::unique_ptr<Menu> LevelMenu::input(SDLKey sym) {
@@ -431,10 +433,10 @@ void LevelMenu::draw(SDL_Surface* screen) {
 
     // UI
     //int framerate = delta_time == 0 ? 0 : int(1.0f/(float(delta_time)*0.001));
-    FontManager::drawText(screen, this->font, 10, 10, "Steps: %d", this->level.getSteps());
+    FontManager::drawText(screen, this->ui_font, 10, 10, "Steps: %d", this->level.getSteps());
 
     if (this->level.isCompleted()) {
-        FontManager::drawTextCentered(screen, this->font, 160, 120, "\x1 \x1 Yay, the level is completed! \x1 \x1");
+        FontManager::drawTextCentered(screen, this->completed_font, 160, 120, "\x1 \x1 Yay, the level is completed! \x1 \x1");
     }
     
     SDL_Flip(screen);
