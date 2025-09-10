@@ -349,6 +349,14 @@ static Level loadLevel(int level_num) {
 	    	return Level(level7size.x, level7size.y, level7map, level7playerPos, level7boxes, level7storages);
         case 8:
 	    	return Level(level8size.x, level8size.y, level8map, level8playerPos, level8boxes, level8storages);
+        case 9:
+	    	return Level(level9size.x, level9size.y, level9map, level9playerPos, level9boxes, level9storages);
+        case 10:
+	    	return Level(level10size.x, level10size.y, level10map, level10playerPos, level10boxes, level10storages);
+        case 11:
+	    	return Level(level11size.x, level11size.y, level11map, level11playerPos, level11boxes, level11storages);
+        case 12:
+	    	return Level(level12size.x, level12size.y, level12map, level12playerPos, level12boxes, level12storages);
 	    default:
 	    	throw std::invalid_argument("Unknown level number.");
 	}
@@ -369,7 +377,6 @@ std::unique_ptr<Menu> LevelMenu::input(SDLKey sym) {
         return nullptr;
     }
 
-    printf("%d\n", sym);
     switch (sym) {
 	case SDLK_UP:
 	case SDLK_8:
